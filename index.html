@@ -1,0 +1,2207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BackOffice AI – One Smart Platform to Manage Your Entire Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B2447;--navy2:#13315C;--royal:#1D5BD6;--royal-d:#154BAF;--royal-l:#E8F0FE;
+  --violet:#7C5CFC;--bg:#F4F6FB;--card:#FFFFFF;--line:#E4E9F2;
+  --text:#13233B;--muted:#5B6B85;--success:#0E9F6E;--success-l:#E3F7EF;
+  --danger:#E02424;--danger-l:#FDECEC;--warn:#C27803;--warn-l:#FDF3DF;
+  --shadow:0 1px 3px rgba(16,42,86,.08),0 8px 24px rgba(16,42,86,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+h1,h2,h3,h4{line-height:1.2}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:14px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;width:100%;background:#fff;color:var(--text);outline:none;transition:border .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--royal);box-shadow:0 0 0 3px rgba(29,91,214,.12)}
+label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin:10px 0 5px;text-transform:uppercase;letter-spacing:.04em}
+a{color:var(--royal);text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 20px}
+.hidden{display:none!important}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-weight:600;font-size:14px;transition:.18s;justify-content:center}
+.btn-primary{background:var(--royal);color:#fff}
+.btn-primary:hover{background:var(--royal-d);transform:translateY(-1px)}
+.btn-outline{border:1.5px solid var(--line);background:#fff;color:var(--text)}
+.btn-outline:hover{border-color:var(--royal);color:var(--royal)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#B91C1C}
+.btn-ghost{color:var(--royal);padding:8px 12px}
+.btn-ghost:hover{background:var(--royal-l)}
+.btn-sm{padding:7px 12px;font-size:13px;border-radius:8px}
+.btn-block{width:100%}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:var(--muted);transition:.15s;flex:none}
+.iconbtn:hover{background:var(--royal-l);color:var(--royal)}
+.iconbtn.danger:hover{background:var(--danger-l);color:var(--danger)}
+
+/* Welcome / Auth */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px;
+  background:linear-gradient(135deg,#0B2447 0%,#13315C 45%,#1D5BD6 100%)}
+.auth-card{background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(4,18,44,.45);max-width:440px;width:100%;padding:36px;animation:pop .35s ease}
+.auth-brand{text-align:center;margin-bottom:20px}
+.auth-brand img{width:88px;height:88px;border-radius:22px;object-fit:cover;box-shadow:var(--shadow)}
+.auth-brand h1{font-size:24px;color:var(--navy);margin-top:12px}
+.auth-brand p{color:var(--muted);font-size:14px;margin-top:4px}
+.hero-left{max-width:520px;margin:0 auto 34px;text-align:center}
+.hero-left img{width:110px;height:110px;border-radius:28px;object-fit:cover;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.hero-left h1{color:#fff;font-size:34px;margin:18px 0 8px;letter-spacing:-.5px}
+.hero-left h1 span{color:#9DB8F5}
+.hero-left .tag{color:#C9D8F8;font-size:17px;font-weight:500}
+.hero-left .desc{color:#9DB4E0;font-size:14.5px;margin-top:14px;max-width:440px;margin-left:auto;margin-right:auto}
+.hero-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero-badges span{background:rgba(255,255,255,.12);color:#DFE9FF;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.18)}
+.auth-link{text-align:center;margin-top:16px;font-size:14px;color:var(--muted)}
+
+/* Shell */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{display:flex;align-items:center;gap:14px;height:62px}
+.topbar .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--navy);font-size:16px}
+.topbar .brand img{width:36px;height:36px;border-radius:10px;object-fit:cover}
+.topbar .brand small{display:block;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.06em}
+.top-search{margin-left:auto;position:relative;width:300px}
+.top-search input{padding:9px 14px 9px 38px;border-radius:999px;background:var(--bg);border-color:transparent}
+.top-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.biz-chip{display:flex;align-items:center;gap:9px;background:var(--royal-l);padding:6px 14px 6px 8px;border-radius:999px;font-weight:600;font-size:13.5px;color:var(--navy)}
+.biz-chip img{width:28px;height:28px;border-radius:999px;object-fit:cover}
+main{padding:26px 0 40px}
+.foot{border-top:1px solid var(--line);padding:22px 0;text-align:center;color:var(--muted);font-size:13px;background:#fff}
+
+/* Sidebar */
+.overlay{position:fixed;inset:0;background:rgba(8,20,40,.5);z-index:80;opacity:0;pointer-events:none;transition:.25s}
+.overlay.open{opacity:1;pointer-events:auto}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:292px;background:var(--navy);color:#fff;z-index:90;transform:translateX(-105%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow-y:auto}
+.sidebar.open{transform:translateX(0)}
+.sb-head{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand{display:flex;align-items:center;gap:11px}
+.sb-brand img{width:44px;height:44px;border-radius:12px;object-fit:cover}
+.sb-brand b{font-size:15.5px;display:block}
+.sb-brand small{color:#9DB4E0;font-size:11px}
+.sb-profile{display:flex;gap:11px;align-items:center;margin-top:14px;background:rgba(255,255,255,.07);border-radius:14px;padding:10px}
+.sb-profile img{width:42px;height:42px;border-radius:999px;object-fit:cover;border:2px solid var(--violet)}
+.sb-profile b{font-size:14px;display:block}
+.sb-profile small{color:#9DB4E0;font-size:11.5px;display:block;overflow:hidden;text-overflow:ellipsis}
+.sb-nav{flex:1;padding:10px 10px 16px}
+.sb-sec{margin-bottom:2px}
+.sb-main{display:flex;align-items:center;gap:11px;width:100%;padding:11px 12px;border-radius:10px;color:#C9D5EE;font-weight:600;font-size:14px;transition:.15s;text-align:left}
+.sb-main:hover{background:rgba(255,255,255,.08);color:#fff}
+.sb-main.active{background:var(--royal);color:#fff}
+.sb-main .chev{margin-left:auto;transition:transform .2s;font-size:11px}
+.sb-main.open .chev{transform:rotate(180deg)}
+.sb-subs{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.sb-subs.open{max-height:600px}
+.sb-sub{display:block;width:100%;text-align:left;padding:8px 12px 8px 40px;color:#9DB4E0;font-size:13px;border-radius:8px;transition:.15s}
+.sb-sub:hover{color:#fff;background:rgba(255,255,255,.06)}
+.sb-sub.active{color:#fff;background:rgba(29,91,214,.35);font-weight:600}
+.sb-foot{padding:14px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-logout{width:100%;display:flex;align-items:center;gap:10px;justify-content:center;padding:11px;border-radius:10px;background:rgba(224,36,36,.14);color:#FF8F8F;font-weight:700;font-size:14px;transition:.15s}
+.sb-logout:hover{background:rgba(224,36,36,.28);color:#fff}
+
+/* Page bits */
+.page-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.page-head h2{font-size:23px;color:var(--navy)}
+.page-head p{color:var(--muted);font-size:13.5px;width:100%;margin-top:-8px}
+.page-head .spacer{flex:1}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:20px;border:1px solid #EEF2F8}
+.card h3{font-size:15.5px;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.card-head h3{margin:0}
+.card-head .spacer{flex:1}
+.stat{display:flex;flex-direction:column;gap:4px}
+.stat .lbl{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:6px}
+.stat .val{font-size:21px;font-weight:800;color:var(--navy)}
+.stat .val.pos{color:var(--success)}.stat .val.neg{color:var(--danger)}
+.stat .ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.ico.blue{background:var(--royal-l);color:var(--royal)}.ico.green{background:var(--success-l);color:var(--success)}
+.ico.red{background:var(--danger-l);color:var(--danger)}.ico.amber{background:var(--warn-l);color:var(--warn)}
+.ico.violet{background:#F0EBFF;color:var(--violet)}
+.pill{display:inline-flex;align-items:center;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700}
+.pill.paid{background:var(--success-l);color:var(--success)}
+.pill.pending{background:var(--warn-l);color:var(--warn)}
+.pill.partial{background:var(--royal-l);color:var(--royal)}
+.pill.overdue{background:var(--danger-l);color:var(--danger)}
+
+/* Banner */
+.banner{position:relative;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px}
+.banner img{width:100%;height:190px;object-fit:cover;display:block}
+.banner .cap{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,22,46,.85) 0%,rgba(8,22,46,.35) 60%,transparent);display:flex;flex-direction:column;justify-content:center;padding:26px;color:#fff}
+.banner .cap h2{font-size:25px;margin-bottom:4px}
+.banner .cap p{color:#C9D8F8;font-size:13.5px}
+.banner .banner-actions{position:absolute;top:12px;right:12px;display:flex;gap:8px}
+.banner .banner-actions .bbtn{background:rgba(255,255,255,.92);color:var(--navy);padding:7px 13px;border-radius:9px;font-size:12.5px;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.banner .banner-actions .bbtn:hover{background:#fff}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+th{background:#F7F9FD;color:var(--muted);text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid #EEF2F8;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:.12s}
+tbody tr:hover{background:#F8FAFE}
+.rowclick{cursor:pointer}
+.tbl-actions{display:flex;gap:4px;justify-content:flex-end}
+
+/* Forms & modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(8,20,40,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;animation:fade .18s}
+.modal{background:#fff;border-radius:18px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 30px 80px rgba(4,18,44,.4);animation:pop .22s}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2;border-radius:18px 18px 0 0}
+.modal-h h3{font-size:16.5px;color:var(--navy)}
+.modal-b{padding:6px 22px 22px}
+.modal-f{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--line);position:sticky;bottom:0;background:#fff}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.f3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 14px}
+.err{background:var(--danger-l);color:var(--danger);font-size:13px;font-weight:600;padding:9px 13px;border-radius:9px;margin-top:12px}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* Misc */
+.toast-wrap{position:fixed;top:18px;right:18px;z-index:200;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--navy);color:#fff;padding:12px 18px;border-radius:11px;font-size:13.5px;font-weight:600;box-shadow:0 12px 30px rgba(4,18,44,.35);display:flex;gap:9px;align-items:center;animation:slidein .25s}
+.toast.ok{background:var(--success)}.toast.bad{background:var(--danger)}
+.empty{text-align:center;padding:44px 20px;color:var(--muted)}
+.empty .eico{width:62px;height:62px;border-radius:18px;background:var(--royal-l);color:var(--royal);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.empty b{display:block;color:var(--text);font-size:15.5px;margin-bottom:4px}
+.empty p{font-size:13.5px;margin-bottom:16px}
+.ai-card{background:linear-gradient(135deg,#0B2447,#1D5BD6);color:#fff;border:none}
+.ai-card h3{color:#fff}
+.ai-card p{color:#D6E2FA;font-size:14px}
+.ai-card .aico{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{border:1.5px solid rgba(255,255,255,.3);color:#DFE9FF;padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600;transition:.15s}
+.chip:hover{background:rgba(255,255,255,.15)}
+.chart-row{display:flex;align-items:flex-end;gap:8px;height:150px;padding-top:8px}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.chart-col .bars{display:flex;gap:3px;align-items:flex-end;width:100%;justify-content:center;height:100%}
+.chart-col .bar{width:38%;border-radius:5px 5px 0 0;min-height:2px;transition:height .4s}
+.chart-col small{font-size:10px;color:var(--muted);white-space:nowrap}
+.legend{display:flex;gap:14px;font-size:11.5px;color:var(--muted);margin-top:10px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px}
+.alert{display:flex;gap:10px;padding:11px 14px;border-radius:11px;font-size:13px;font-weight:600;margin-bottom:9px;align-items:flex-start}
+.alert.red{background:var(--danger-l);color:var(--danger)}
+.alert.amber{background:var(--warn-l);color:var(--warn)}
+.alert.blue{background:var(--royal-l);color:var(--royal)}
+.record-card{display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid var(--line);border-radius:14px;transition:.15s;background:#fff}
+.record-card:hover{box-shadow:var(--shadow);border-color:#C9D8F8}
+.record-card .rico{width:42px;height:42px;border-radius:12px;background:var(--royal-l);color:var(--royal);display:flex;align-items:center;justify-content:center;flex:none}
+.record-card b{font-size:14.5px}
+.record-card .cat{font-size:11px;font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:.05em}
+.record-card p{font-size:12.5px;color:var(--muted);margin-top:3px}
+.record-card .meta{font-size:11px;color:var(--muted);margin-top:6px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tab{padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);border:1.5px solid var(--line);background:#fff;transition:.15s}
+.tab:hover{color:var(--royal)}
+.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chat{display:flex;flex-direction:column;gap:12px;min-height:200px}
+.msg{max-width:78%;padding:12px 16px;border-radius:16px;font-size:14px;white-space:pre-wrap}
+.msg.user{align-self:flex-end;background:var(--royal);color:#fff;border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:#F1F4FB;color:var(--text);border-bottom-left-radius:4px}
+.msg.bot b{color:var(--navy)}
+.about-hero{background:linear-gradient(135deg,var(--navy),var(--royal));border-radius:18px;padding:30px;color:#fff}
+.about-hero img{width:84px;height:84px;border-radius:20px;object-fit:cover;border:3px solid rgba(255,255,255,.4)}
+.timeline{border-left:2.5px solid var(--royal-l);padding-left:18px;margin-top:14px;display:flex;flex-direction:column;gap:14px}
+.timeline .tl{position:relative}
+.timeline .tl::before{content:'';position:absolute;left:-25px;top:5px;width:11px;height:11px;border-radius:99px;background:var(--royal)}
+.sub-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.sub-link{padding:8px 15px;border-radius:10px;font-size:13px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--line);transition:.15s}
+.sub-link:hover{color:var(--royal);border-color:var(--royal)}
+.sub-link.active{background:var(--royal-l);color:var(--royal);border-color:var(--royal)}
+.plus-fab{position:fixed;right:24px;bottom:24px;width:56px;height:56px;border-radius:99px;background:var(--royal);color:#fff;font-size:28px;box-shadow:0 12px 30px rgba(29,91,214,.45);z-index:70;transition:.18s;display:flex;align-items:center;justify-content:center}
+.plus-fab:hover{background:var(--royal-d);transform:scale(1.06)}
+.fab-menu{position:fixed;right:24px;bottom:92px;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(4,18,44,.25);z-index:70;overflow:hidden;min-width:220px;animation:pop .18s}
+.fab-menu button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:12px 16px;font-size:13.5px;font-weight:600;color:var(--text)}
+.fab-menu button:hover{background:var(--royal-l);color:var(--royal)}
+.editable-cell{min-width:90px;padding:8px 10px;border-radius:7px;outline:none}
+.editable-cell:focus{background:#FFF8E1;box-shadow:0 0 0 2px var(--warn)}
+.onb-steps{display:flex;gap:6px;margin-bottom:22px}
+.onb-steps i{height:5px;flex:1;border-radius:99px;background:var(--line)}
+.onb-steps i.done{background:var(--royal)}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cat-opt{border:2px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;transition:.15s;background:#fff}
+.cat-opt:hover{border-color:var(--royal);background:var(--royal-l)}
+.cat-opt.sel{border-color:var(--royal);background:var(--royal-l);box-shadow:0 0 0 3px rgba(29,91,214,.15)}
+.cat-opt .ci{width:42px;height:42px;border-radius:12px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:var(--royal-l);color:var(--royal)}
+.cat-opt b{font-size:13.5px;display:block}
+.cat-opt small{font-size:11px;color:var(--muted)}
+.item-row{display:grid;grid-template-columns:1fr 70px 110px 40px;gap:8px;margin-bottom:8px;align-items:center}
+.sample-banner{background:var(--warn-l);color:var(--warn);font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:10px;margin-bottom:16px;display:flex;gap:8px;align-items:center}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes slidein{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+@media(max-width:980px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){
+  .g4,.g3,.g2{grid-template-columns:1fr}
+  .top-search{display:none}
+  .banner img{height:150px}
+  .banner .cap h2{font-size:19px}
+  .f2,.f3{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:1fr 1fr}
+  .item-row{grid-template-columns:1fr 60px 90px 34px}
+}
+</style>
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+<body>
+
+<!-- ============ VIEW: WELCOME ============ -->
+<div id="view-welcome" class="hidden">
+  <div class="auth-wrap" style="flex-direction:column">
+    <div class="hero-left">
+      <img src="/images/IMG_20261122_142327.png" alt="BackOffice AI logo">
+      <h1>BACKOFFICE <span>AI</span></h1>
+      <div class="tag">Your Business. Your Money. Your Control.</div>
+      <p class="desc">One smart platform to manage customers, invoices, payments, expenses, cash-flow forecasts and AI-powered advice for your entire back office.</p>
+      <div class="hero-badges">
+        <span>Invoices &amp; Payments</span><span>Cash-Flow Forecast</span><span>AI Assistant</span><span>WhatsApp Reminders</span>
+      </div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-brand">
+        <h1 style="font-size:20px">Welcome to BackOffice AI</h1>
+        <p>The One-Person Business Manager</p>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="showAuth('register')">Create Business Account</button>
+      <button class="btn btn-outline btn-block" style="margin-top:10px" onclick="showAuth('login')">Existing User Login</button>
+      <div class="auth-link">Want to know more? <a href="#" onclick="go('about');return false">About BackOffice AI &amp; the creator</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ VIEW: REGISTER ============ -->
+<div id="view-register" class="hidden">
+  <div class="auth-wrap"><div class="auth-card">
+    <div class="auth-brand">
+      <img src="/images/IMG_20261122_142327.png" alt="logo">
+      <h1 style="font-size:20px">Create Business Account</h1>
+      <p>Set up your private business workspace in minutes</p>
+    </div>
+    <form id="reg-form" onsubmit="doRegister(event)">
+      <label>Owner's Full Name</label><input id="reg-name" required placeholder="e.g. Hemanth Kumar">
+      <label>Username</label><input id="reg-username" required minlength="3" placeholder="Choose a username">
+      <label>Email Address</label><input id="reg-email" type="email" required placeholder="you@example.com">
+      <label>Mobile Number</label><input id="reg-mobile" required pattern="[0-9+ -]{10,15}" placeholder="10-digit mobile number">
+      <label>Password</label><input id="reg-pass" type="password" required minlength="6" placeholder="At least 6 characters">
+      <label>Confirm Password</label><input id="reg-pass2" type="password" required placeholder="Re-enter password">
+      <div id="reg-err" class="err hidden"></div>
+      <button class="btn btn-primary btn-block" style="margin-top:16px">Create Account &amp; Continue</button>
+    </form>
+    <div class="auth-link">Already have an account? <a href="#" onclick="showAuth('login');return false">Login</a></div>
+  </div></div>
+</div>
+
+<!-- ============ VIEW: LOGIN ============ -->
+<div id="view-login" class="hidden">
+  <div class="auth-wrap"><div class="auth-card">
+    <div class="auth-brand">
+      <img src="/images/IMG_20261122_142327.png" alt="logo">
+      <h1 style="font-size:20px">Welcome Back to BackOffice AI</h1>
+      <p>Log in to your Admin Panel</p>
+    </div>
+    <form id="login-form" onsubmit="doLogin(event)">
+      <label>Admin Username or Email</label><input id="log-user" required placeholder="Username or email">
+      <label>Password</label><input id="log-pass" type="password" required placeholder="Your password">
+      <div style="display:flex;align-items:center;gap:8px;margin-top:12px">
+        <input type="checkbox" id="log-remember" style="width:auto"> <span style="font-size:13.5px">Remember me</span>
+        <a href="#" style="margin-left:auto;font-size:13px" onclick="forgotPassword();return false">Forgot password?</a>
+      </div>
+      <div id="log-err" class="err hidden"></div>
+      <button class="btn btn-primary btn-block" style="margin-top:16px">Login</button>
+    </form>
+    <div class="auth-link">New here? <a href="#" onclick="showAuth('register');return false">Create a business account</a></div>
+  </div></div>
+</div>
+
+<!-- ============ VIEW: ONBOARDING ============ -->
+<div id="view-onboarding" class="hidden">
+  <div class="auth-wrap" style="align-items:flex-start;padding-top:44px">
+    <div class="auth-card" style="max-width:640px">
+      <div class="onb-steps"><i id="ob-step1" class="done"></i><i id="ob-step2"></i><i id="ob-step3"></i><i id="ob-step4"></i></div>
+
+      <!-- Step 1: category -->
+      <div id="ob-1">
+        <div class="auth-brand"><h1 style="font-size:20px">Select Your Business Category</h1><p>This helps us personalize your workspace</p></div>
+        <div class="cat-grid" id="cat-grid"></div>
+        <div id="ob1-err" class="err hidden" style="margin-top:14px"></div>
+        <button class="btn btn-primary btn-block" style="margin-top:18px" onclick="obNext(1)">Continue</button>
+        <button class="btn btn-ghost btn-block" style="margin-top:6px" onclick="backToWelcome()">Back</button>
+      </div>
+
+      <!-- Step 2: business details -->
+      <div id="ob-2" class="hidden">
+        <div class="auth-brand"><h1 style="font-size:20px">Business Details</h1><p>Tell us about your business</p></div>
+        <form onsubmit="obNext(2);return false">
+          <label>Business Name *</label><input id="ob-bname" required placeholder="e.g. Hemanth Home Tuition">
+          <label>Business Description</label><textarea id="ob-bdesc" rows="2" placeholder="Short description of your business"></textarea>
+          <label>Owner Name</label><input id="ob-owner">
+          <label>Street / Area</label><input id="ob-street" placeholder="Street name">
+          <div class="f3">
+            <div><label>City</label><input id="ob-city"></div>
+            <div><label>PIN Code</label><input id="ob-pin"></div>
+            <div><label>State</label><input id="ob-state"></div>
+          </div>
+          <label>Country</label><input id="ob-country" value="India">
+          <div class="f2">
+            <div><label>Business Phone</label><input id="ob-phone" placeholder="Used in WhatsApp reminders"></div>
+            <div><label>Business Email</label><input id="ob-bemail" type="email"></div>
+          </div>
+          <label>Opening Cash / Bank Balance (₹)</label><input id="ob-opening" type="number" min="0" value="0">
+          <div id="ob2-err" class="err hidden"></div>
+          <button class="btn btn-primary btn-block" style="margin-top:16px">Continue</button>
+        </form>
+      </div>
+
+      <!-- Step 3: admin panel -->
+      <div id="ob-3" class="hidden">
+        <div class="auth-brand"><h1 style="font-size:20px">Create Your Owner Admin Panel</h1><p>Create your private administrator credentials to securely manage your entire business workspace.</p></div>
+        <form onsubmit="obNext(3);return false">
+          <label>Admin Username</label><input id="ob-adminuser" required minlength="3">
+          <label>Admin Email</label><input id="ob-adminemail" type="email" required>
+          <label>Admin Password</label><input id="ob-adminpass" type="password" required minlength="6">
+          <label>Confirm Admin Password</label><input id="ob-adminpass2" type="password" required>
+          <label>Recovery Mobile Number (optional)</label><input id="ob-recovery">
+          <p class="hint">You become the Super Admin of this workspace. A confirmation email will be prepared after setup.</p>
+          <div id="ob3-err" class="err hidden"></div>
+          <button class="btn btn-primary btn-block" style="margin-top:16px">Create Admin Panel</button>
+          <button type="button" class="btn btn-ghost btn-block" style="margin-top:6px" onclick="obBack(3)">Back</button>
+        </form>
+      </div>
+
+      <!-- Step 4: demo choice -->
+      <div id="ob-4" class="hidden">
+        <div class="auth-brand"><h1 style="font-size:20px">Almost Done!</h1><p>Choose how you'd like to start your workspace</p></div>
+        <div class="alert blue" style="margin-bottom:14px">Your Owner Admin Panel is ready. A confirmation email for <b id="ob-email-show"></b> has been prepared.</div>
+        <button class="btn btn-outline btn-block" style="justify-content:flex-start;text-align:left" onclick="finishOnboarding(false)">
+          <b>Start with an empty workspace</b>&nbsp;— clean slate, add everything yourself
+        </button>
+        <button class="btn btn-outline btn-block" style="justify-content:flex-start;text-align:left;margin-top:10px" onclick="finishOnboarding(true)">
+          <b>Explore with demonstration records</b>&nbsp;— clearly-labelled sample data for a Home Tutor business
+        </button>
+        <button class="btn btn-ghost btn-block" style="margin-top:10px" onclick="obBack(4)">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ VIEW: APP ============ -->
+<div id="view-app" class="hidden">
+  <header class="topbar">
+    <div class="container topbar-in">
+      <button class="iconbtn" onclick="toggleSidebar(true)" title="Menu" style="font-size:20px">☰</button>
+      <div class="brand"><img src="/images/IMG_20261122_142327.png" alt="logo"><div>BackOffice AI<small id="tb-tag">Your Business. Your Money. Your Control.</small></div></div>
+      <div class="top-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="Search customers, invoices, payments…" onkeydown="if(event.key==='Enter')globalSearch(this.value)">
+      </div>
+      <div class="biz-chip" id="biz-chip"></div>
+    </div>
+  </header>
+
+  <div class="overlay" id="overlay" onclick="toggleSidebar(false)"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-brand"><img src="/images/IMG_20261122_142327.png" alt="logo"><div><b>BackOffice AI</b><small>Your Business. Your Money. Your Control.</small></div></div>
+      <div class="sb-profile">
+        <img id="sb-pic" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231D5BD6'/%3E%3Ctext x='20' y='26' font-size='16' fill='white' text-anchor='middle' font-family='Arial'%3EH%3C/text%3E%3C/svg%3E" alt="profile">
+        <div style="min-width:0"><b id="sb-owner"></b><small id="sb-username"></small><small id="sb-email"></small></div>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:#9DB4E0">Business: <b id="sb-biz" style="color:#fff"></b></div>
+    </div>
+    <nav class="sb-nav" id="sb-nav"></nav>
+    <div class="sb-foot"><button class="sb-logout" onclick="openLogoutModal()">⏻ &nbsp;Logout</button></div>
+  </aside>
+
+  <main class="container" id="page-root"></main>
+
+  <button class="plus-fab" onclick="toggleFab()" title="Add new">+</button>
+  <div id="fab-root"></div>
+
+  <footer class="foot"><div class="container">BackOffice AI © 2026. All Rights Reserved.</div></footer>
+</div>
+
+<!-- ============ VIEW: ABOUT ============ -->
+<div id="view-about" class="hidden">
+  <div class="auth-wrap" style="align-items:flex-start;padding:40px 16px">
+    <div style="max-width:760px;width:100%">
+      <div class="about-hero">
+        <img src="/images/IMG_20261122_142327.png" alt="BackOffice AI logo">
+        <h1 style="font-size:30px;margin-top:16px">BackOffice AI</h1>
+        <p style="color:#C9D8F8;font-size:16px;margin-top:4px">Your Business. Your Money. Your Control.</p>
+        <p style="color:#DFE9FF;font-size:14px;margin-top:14px;max-width:560px">An AI-powered smart business management platform built for one-person businesses — bringing intelligent administration, employee and customer management, task and payment tracking, business analytics, automated reports, secure owner &amp; admin panels and AI-powered assistance together in a single platform.</p>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h3>About the Creator</h3>
+        <p style="font-size:14.5px"><b style="color:var(--navy);font-size:16px">Hemanth</b> — Founder &amp; Creator of BackOffice AI</p>
+        <p style="margin-top:10px;font-size:14px;color:#334563">My name is Hemanth, and I am a technology enthusiast with a strong interest in computers, Artificial Intelligence, software development, and innovation. I am currently pursuing my education and continuously improving my technical, programming, and problem-solving skills.</p>
+        <p style="margin-top:10px;font-size:14px;color:#334563">I am interested in web development, app development, AI tools, automation, business management, and modern technologies. I enjoy building creative projects, developing websites and applications, participating in hackathons, and converting innovative ideas into real-world solutions.</p>
+        <p style="margin-top:10px;font-size:14px;color:#334563">My main project is <b>BackOffice AI</b>, an AI-powered smart business management platform designed to simplify and automate everyday business operations. Its main theme is to provide intelligent administration, employee management, task tracking, business analytics, automated reports, secure owner and admin panels, and AI-powered assistance in one platform. My vision is to make BackOffice AI a professional, user-friendly, secure, and powerful platform that helps businesses save time, improve productivity, and manage their entire back office efficiently.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+          <span class="pill partial">Web Development</span><span class="pill partial">App Development</span><span class="pill partial">AI Tools</span><span class="pill partial">Automation</span><span class="pill partial">Business Management</span><span class="pill partial">Hackathons</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h3>BackOffice AI Vision &amp; Roadmap</h3>
+        <div class="timeline">
+          <div class="tl"><b>Intelligent Administration</b><p style="font-size:13px;color:var(--muted)">A secure owner &amp; Super Admin panel with business settings, user roles and permissions.</p></div>
+          <div class="tl"><b>Customer &amp; Payment Management</b><p style="font-size:13px;color:var(--muted)">Customers, invoices, dues tracking, WhatsApp reminders and complete payment history.</p></div>
+          <div class="tl"><b>Business Analytics &amp; Forecasting</b><p style="font-size:13px;color:var(--muted)">Income vs expense charts, 30–90 day cash-flow forecasts and what-if scenarios.</p></div>
+          <div class="tl"><b>AI-Powered Assistance</b><p style="font-size:13px;color:var(--muted)">An assistant that reads your real business data and tells you what to do next.</p></div>
+          <div class="tl"><b>One Smart Platform</b><p style="font-size:13px;color:var(--muted)">The vision: help every one-person business save time, improve productivity and manage the entire back office efficiently.</p></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:18px">
+        <button class="btn btn-primary" onclick="backToWelcome()">← Back to Welcome</button>
+        <button class="btn btn-outline" onclick="backToWelcome()">Get Started</button>
+      </div>
+      <p style="text-align:center;color:#fff;opacity:.75;font-size:12.5px;margin-top:22px">BackOffice AI © 2026. All Rights Reserved.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toasts"></div>
+<div id="modal-root"></div>
+
+<script>
+/* =====================================================
+   BACKOFFICE AI — single-file application
+   Data is stored in the browser (localStorage) so every
+   business keeps its own private workspace on its device.
+   ===================================================== */
+
+const CATEGORIES = {
+  Education:{icon:'🎓',desc:'Tutors & tuition centres',sample:'Home Tutor'},
+  Freelancing:{icon:'💻',desc:'Designers & developers',sample:'Freelance Designer'},
+  Salon:{icon:'✂️',desc:'Beauty & hair services',sample:'Salon'},
+  Retail:{icon:'🛍️',desc:'Shops & stores',sample:'Retail Store'},
+  Healthcare:{icon:'🩺',desc:'Small clinics',sample:'Clinic'},
+  Other:{icon:'🏢',desc:'Other businesses',sample:'My Business'}
+};
+
+const DB_KEY='backoffice_ai_db_v1';
+let DB=null;
+let PAGE='dashboard';
+let SUBS={}; // active subsection per section
+let OB={step:1,category:null,demo:false,profile:{}};
+
+/* ---------- utils ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+const today=()=>new Date().toISOString().slice(0,10);
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)};
+const daysUntil=d=>d?Math.ceil((new Date(d)-new Date(today()))/86400000):null;
+const fmtDate=d=>d?new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
+const uid=()=>'id'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function hash(str){let h=5381;for(let i=0;i<str.length;i++){h=((h<<5)+h)+str.charCodeAt(i);h|=0}return 'bo$'+(h>>>0).toString(36)+'$'+str.length}
+function toast(msg,kind){const t=document.createElement('div');t.className='toast '+(kind||'');t.textContent=msg;$('toasts').appendChild(t);setTimeout(()=>t.remove(),3200)}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(DB))}
+function loadDB(){try{const raw=localStorage.getItem(DB_KEY);return raw?JSON.parse(raw):null}catch(e){return null}}
+
+function statusOf(total,paid,due){
+  const rem=Number(total||0)-Number(paid||0);
+  if(rem<=0.009)return['Paid','paid'];
+  if(Number(paid||0)>0)return['Partially Paid','partial'];
+  if(due&&daysUntil(due)<0)return['Overdue','overdue'];
+  return['Pending','pending'];
+}
+function custTotalPaid(cid){return DB.payments.filter(p=>p.customerId===cid).reduce((s,p)=>s+Number(p.amount||0),0)}
+function custBalance(c){return Number(c.total||0)-custTotalPaid(c.id)}
+function custStatus(c){return statusOf(c.total,custTotalPaid(c.id),c.dueDate)[1]}
+function custInvoices(cid){return DB.invoices.filter(i=>i.customerId===cid)}
+function invTotal(inv){const items=inv.items||[];const sub=items.reduce((s,it)=>s+Number(it.qty||0)*Number(it.price||0),0);const disc=Number(inv.discount||0);const tax=Number(inv.tax||0);return Math.max(0,sub-disc)+sub*tax/100}
+function invPaid(inv){return custTotalPaid(inv.customerId)-(custBalance(custById(inv.customerId))>0?0:0)||invPaidDirect(inv)}
+function invPaidDirect(inv){return Math.min(invTotal(inv),custTotalPaid(inv.customerId))}
+function custById(id){return DB.customers.find(c=>c.id===id)}
+function logActivity(text){DB.activity.unshift({date:today(),text});DB.activity=DB.activity.slice(0,40)}
+
+/* ---------- demo data (clearly labelled as sample) ---------- */
+function buildDemo(){
+  const c1={id:uid()+1,name:'Ravi Kumar',phone:'9841234567',email:'ravi@example.com',address:'Gandhi Nagar',type:'Individual',service:'Maths tuition – Class 10',total:12000,dueDate:addDays(today(),5),notes:''};
+  const c2={id:uid()+2,name:'Sunita Sharma',phone:'9876501234',email:'sunita@example.com',address:'Vidya Nagar',type:'Individual',service:'Science tuition – Class 9',total:9600,dueDate:addDays(today(),-20),notes:''};
+  const c3={id:uid()+3,name:'Mohammed Ali',phone:'9900112233',email:'ali@example.com',address:'Station Road',type:'Individual',service:'Spoken English course',total:7000,dueDate:addDays(today(),-10),notes:'Asked for more time last week'};
+  const c4={id:uid()+4,name:'Priya Nair',phone:'9765432101',email:'priya@example.com',address:'Lake View Layout',type:'Individual',service:'Maths tuition – Class 8',total:8000,dueDate:addDays(today(),15),notes:''};
+  const inv=(no,cid,items,due)=>({id:uid()+no,number:no,customerId:cid,items,date:addDays(today(),-20),due,discount:0,tax:0,notes:'Thank you for your business!',recurring:''});
+  const invoices=[
+    inv('INV-1001',c1.id,[{name:'Maths tuition – Class 10 (monthly)',qty:3,price:4000}],addDays(today(),5)),
+    inv('INV-1002',c2.id,[{name:'Science tuition – Class 9 (monthly)',qty:3,price:3200}],addDays(today(),-20)),
+    inv('INV-1003',c3.id,[{name:'Spoken English course',qty:1,price:7000}],addDays(today(),-10)),
+    inv('INV-1004',c4.id,[{name:'Maths tuition – Class 8 (monthly)',qty:2,price:4000}],addDays(today(),15))
+  ];
+  const pay=(cid,amt,d,m,ref)=>({id:uid()+ref,customerId:cid,invoiceId:'',amount:amt,date:d,method:m,reference:ref,notes:''});
+  const payments=[
+    pay(c1.id,8000,addDays(today(),-12),'UPI','TXN9001'),
+    pay(c2.id,9600,addDays(today(),-18),'Cash','TXN9002'),
+    pay(c3.id,3000,addDays(today(),-8),'UPI','TXN9003')
+  ];
+  const income=[
+    {id:uid()+'i1',title:'Tuition fee – Ravi Kumar',customer:'Ravi Kumar',amount:8000,date:addDays(today(),-12),method:'UPI',category:'Tuition Fees',desc:''},
+    {id:uid()+'i2',title:'Tuition fee – Sunita Sharma',customer:'Sunita Sharma',amount:9600,date:addDays(today(),-18),method:'Cash',category:'Tuition Fees',desc:''},
+    {id:uid()+'i3',title:'Course fee – Mohammed Ali',customer:'Mohammed Ali',amount:3000,date:addDays(today(),-8),method:'UPI',category:'Course Fees',desc:''},
+    {id:uid()+'i4',title:'Weekend maths workshop',customer:'—',amount:5000,date:addDays(today(),-25),method:'Bank Transfer',category:'Workshops',desc:''}
+  ];
+  const expenses=[
+    {id:uid()+'e1',title:'Study hall rent',amount:6000,date:addDays(today(),-15),category:'Rent',method:'Bank Transfer',vendor:'Sai Property',notes:''},
+    {id:uid()+'e2',title:'Internet bill',amount:999,date:addDays(today(),-10),category:'Internet',method:'UPI',vendor:'Airtel',notes:''},
+    {id:uid()+'e3',title:'Auto / transport',amount:800,date:addDays(today(),-6),category:'Transport',method:'Cash',vendor:'',notes:''},
+    {id:uid()+'e4',title:'Electricity bill',amount:1200,date:addDays(today(),-4),category:'Electricity',method:'UPI',vendor:'BESCOM',notes:''},
+    {id:uid()+'e5',title:'Whiteboard & markers',amount:750,date:addDays(today(),-2),category:'Supplies',method:'Cash',vendor:'Stationery Mart',notes:''}
+  ];
+  const bills=[
+    {id:uid()+'b1',name:'Study hall rent',amount:6000,due:addDays(today(),5),recurrence:'Monthly',status:'Pending'},
+    {id:uid()+'b2',name:'Internet bill',amount:999,due:addDays(today(),12),recurrence:'Monthly',status:'Pending'}
+  ];
+  const banks=[{id:uid()+'k1',bank:'HDFC Bank',holder:'Hemanth',accnum:'XXXX1234',ifsc:'HDFC0001234',branch:'Main Branch',upi:'hemanth@upi',mobile:'9876543210',primary:true,opening:25000}];
+  const tables=[{id:uid()+'t1',name:'Batch Schedule',columns:['Batch','Days','Time','Students'],rows:[['Class 10 Maths','Mon, Wed, Fri','5:00 PM','8'],['Class 9 Science','Tue, Thu','6:30 PM','6'],['Spoken English','Sat','10:00 AM','5']]}];
+  const records=[{id:uid()+'r1',type:'note',title:'Welcome to your workspace',category:'Notes',body:'This is demonstration data so you can explore BackOffice AI safely. Delete any record you like and add your own real business information.',date:today()}];
+  return {customers:[c1,c2,c3,c4],invoices,payments,income,expenses,bills,banks,tables,records};
+}
+
+/* ---------- auth ---------- */
+function showAuth(v){
+  ['view-welcome','view-register','view-login','view-onboarding','view-app','view-about'].forEach(x=>$(x).classList.add('hidden'));
+  $('view-'+v).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function backToWelcome(){showAuth('welcome')}
+function usersDB(){let u=null;try{u=JSON.parse(localStorage.getItem('backoffice_ai_users')||'{}')}catch(e){}return u||{}}
+function saveUsers(u){localStorage.setItem('backoffice_ai_users',JSON.stringify(u))}
+
+function doRegister(e){
+  e.preventDefault();
+  const name=$('reg-name').value.trim(),username=$('reg-username').value.trim().toLowerCase(),
+        email=$('reg-email').value.trim().toLowerCase(),mobile=$('reg-mobile').value.trim(),
+        p1=$('reg-pass').value,p2=$('reg-pass2').value,err=$('reg-err');
+  err.classList.add('hidden');
+  const fail=m=>{err.textContent=m;err.classList.remove('hidden')};
+  if(p1!==p2)return fail('Passwords do not match.');
+  if(p1.length<6)return fail('Password must be at least 6 characters.');
+  const users=usersDB();
+  if(users[username]||Object.values(users).some(u=>u.email===email))return fail('An account with that username or email already exists.');
+  users[username]={name,username,email,mobile,pass:hash(p1),created:today()};
+  saveUsers(users);
+  OB={step:1,category:null,profile:{name,username,email,mobile}};
+  showOnboarding();
+}
+function doLogin(e){
+  e.preventDefault();
+  const u=$('log-user').value.trim().toLowerCase(),p=$('log-pass').value,err=$('log-err');
+  err.classList.add('hidden');
+  const users=usersDB();
+  const acc=users[u]||Object.values(users).find(x=>x.email===u);
+  if(!acc||acc.pass!==hash(p)){err.textContent='Incorrect username or password. Please try again.';err.classList.remove('hidden');return}
+  if($('log-remember').checked)localStorage.setItem('backoffice_ai_last',acc.username);
+  const bizRaw=localStorage.getItem('backoffice_ai_biz_'+acc.username);
+  DB=bizRaw?JSON.parse(bizRaw):emptyDB(acc);
+  DB.profile=acc;
+  saveDB();
+  enterApp();
+}
+function forgotPassword(){
+  const u=prompt('Enter your admin username or email to request a secure password reset link:');
+  if(u)toast('If that account exists, a password reset link has been sent to its email address.');
+}
+function emptyDB(acc){
+  return {profile:acc,admin:{username:acc.username,email:acc.email,created:today(),status:'Active',role:'Super Admin',recovery:''},
+    business:{name:'',category:'Other',desc:'',owner:acc.name,address:{street:'',city:'',pin:'',state:'',country:'India'},phone:'',email:'',website:'',opening:0,banner:''},
+    customers:[],invoices:[],payments:[],income:[],expenses:[],bills:[],banks:[],tables:[],records:[],activity:[]};
+}
+
+/* ---------- onboarding ---------- */
+function showOnboarding(){
+  showAuth('onboarding');renderObStep();
+}
+function renderObStep(){
+  for(let i=1;i<=4;i++){
+    const el=$('ob-'+i);if(el)el.classList.toggle('hidden',OB.step!==i);
+    const dot=$('ob-step'+i);if(dot)dot.className=OB.step>=i?'done':'';
+  }
+  if(OB.step===1&&!$('cat-grid').dataset.done){
+    $('cat-grid').innerHTML=Object.entries(CATEGORIES).map(([k,v])=>
+      `<button type="button" class="cat-opt" data-cat="${k}" onclick="pickCat('${k}')"><div class="ci" style="font-size:20px">${v.icon}</div><b>${k}</b><small>${v.desc}</small></button>`).join('');
+    $('cat-grid').dataset.done='1';
+  }
+  if(OB.step===3){$('ob-adminuser').value=OB.profile.username;$('ob-adminemail').value=OB.profile.email;$('ob-email-show').textContent=OB.profile.email}
+}
+function pickCat(k){OB.category=k;document.querySelectorAll('.cat-opt').forEach(b=>b.classList.toggle('sel',b.dataset.cat===k))}
+function obBack(from){OB.step=from-1;renderObStep()}
+function obNext(step){
+  const err=id=>{$(id).classList.remove('hidden');return false};
+  if(step===1){
+    if(!OB.category){$('ob1-err').textContent='Please select a business category.';$('ob1-err').classList.remove('hidden');return}
+    $('ob1-err').classList.add('hidden');OB.step=2;
+  }
+  if(step===2){
+    if(!$('ob-bname').value.trim()){$('ob2-err').textContent='Business name is required.';$('ob2-err').classList.remove('hidden');return}
+    $('ob2-err').classList.add('hidden');OB.step=3;
+  }
+  if(step===3){
+    const p1=$('ob-adminpass').value,p2=$('ob-adminpass2').value;
+    if(p1!==p2){$('ob3-err').textContent='Admin passwords do not match.';$('ob3-err').classList.remove('hidden');return}
+    $('ob3-err').classList.add('hidden');OB.step=4;
+  }
+  renderObStep();window.scrollTo(0,0);
+}
+function finishOnboarding(withDemo){
+  const acc=OB.profile;
+  const demo=withDemo?buildDemo():{customers:[],invoices:[],payments:[],income:[],expenses:[],bills:[],banks:[],tables:[],records:[]};
+  DB={profile:acc,
+    admin:{username:$('ob-adminuser').value.trim()||acc.username,email:$('ob-adminemail').value.trim()||acc.email,created:today(),status:'Active',role:'Super Admin',recovery:$('ob-recovery').value.trim(),lastLogin:today()},
+    business:{name:$('ob-bname').value.trim(),category:OB.category,desc:$('ob-bdesc').value.trim(),owner:$('ob-owner').value.trim()||acc.name,
+      address:{street:$('ob-street').value.trim(),city:$('ob-city').value.trim(),pin:$('ob-pin').value.trim(),state:$('ob-state').value.trim(),country:$('ob-country').value.trim()},
+      phone:$('ob-phone').value.trim(),email:$('ob-bemail').value.trim(),website:'',opening:Number($('ob-opening').value||0),banner:''},
+    customers:demo.customers,invoices:demo.invoices,payments:demo.payments,income:demo.income,expenses:demo.expenses,bills:demo.bills,banks:demo.banks,tables:demo.tables,records:demo.records,
+    activity:[{date:today(),text:'Business workspace and Owner Admin Panel created'}]};
+  saveDB();
+  toast('Owner Admin Panel created. Confirmation email prepared for '+DB.admin.email);
+  enterApp();
+}
+
+/* ---------- app shell ---------- */
+function enterApp(){
+  showAuth('app');
+  renderChrome();
+  go('dashboard');
+}
+function renderChrome(){
+  $('biz-chip').innerHTML=`<img src="/images/IMG_20261122_142327.png" alt=""> ${esc(DB.business.name||'My Business')}`;
+  $('sb-owner').textContent=DB.profile.name||'';
+  $('sb-username').textContent='@'+(DB.admin.username||DB.profile.username||'');
+  $('sb-email').textContent=DB.admin.email||DB.profile.email||'';
+  $('sb-biz').textContent=DB.business.name||'—';
+  $('sb-pic').src='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' fill='#1D5BD6'/><text x='20' y='26' font-size='16' fill='white' text-anchor='middle' font-family='Arial'>${(DB.profile.name||'U')[0]}</text></svg>`);
+  renderNav();
+}
+const NAV=[
+  {id:'dashboard',icon:'📊',label:'Dashboard',subs:[]},
+  {id:'business',icon:'🏛️',label:'Business Details',subs:['Main Details','Owner Profile','Records & Documents','Custom Tables','Account & Password']},
+  {id:'customers',icon:'👥',label:'Customers',subs:['All Customers','Customer Details','Payment History']},
+  {id:'payments',icon:'🏦',label:'Payments & Banking',subs:['Payment Overview','Bank Accounts','Bank Balance','Customer Payments & Dues','Reminders','Payment History']},
+  {id:'invoices',icon:'🧾',label:'Invoice Management',subs:['Create Invoice','All Invoices','Recurring Invoices']},
+  {id:'finance',icon:'💰',label:'Income & Expenses',subs:['Income','Expenses','Expense Categories','Upcoming Bills']},
+  {id:'cashflow',icon:'📈',label:'Cash Flow',subs:['Cash Position','30 / 60 / 90-Day Forecast','What-If Scenarios','Cash Alerts']},
+  {id:'ai',icon:'🤖',label:'AI Business Assistant',subs:['Chat Assistant']},
+  {id:'reports',icon:'📑',label:'Reports & Excel',subs:['Financial Reports','Excel Export','Excel Import','Document Library','Custom Reports']},
+  {id:'settings',icon:'⚙️',label:'Settings',subs:['Business Settings','Profile Settings','Owner Admin Panel','User Management','Notifications','Security','Data Management','Help & Support']},
+];
+function renderNav(){
+  $('sb-nav').innerHTML=NAV.map(s=>{
+    const subs=s.subs.map((sub,i)=>`<button class="sb-sub" data-sub="${i}" onclick="openSub('${s.id}',${i},'${esc(sub).replace(/'/g,"\\'")}')">${esc(sub)}</button>`).join('');
+    return `<div class="sb-sec">
+      <button class="sb-main" data-sec="${s.id}" onclick="navClick('${s.id}')">
+        <span>${s.icon}</span><span>${s.label}</span><span class="chev">${s.subs.length?'▾':''}</span>
+      </button>
+      <div class="sb-subs" id="subs-${s.id}">${subs}</div>
+    </div>`;
+  }).join('')+`<div class="sb-sec" style="margin-top:4px"><button class="sb-main" onclick="go('about')"><span>ℹ️</span><span>About BackOffice AI</span></button></div>`;
+}
+function toggleSidebar(open){
+  $('sidebar').classList.toggle('open',open);
+  $('overlay').classList.toggle('open',open);
+}
+function navClick(id){
+  const s=NAV.find(n=>n.id===id);
+  const btn=document.querySelector(`.sb-main[data-sec="${id}"]`);
+  if(s.subs.length){
+    const subs=$('subs-'+id),isOpen=subs.classList.contains('open');
+    document.querySelectorAll('.sb-subs').forEach(x=>x.classList.remove('open'));
+    document.querySelectorAll('.sb-main').forEach(x=>x.classList.remove('open'));
+    if(!isOpen){subs.classList.add('open');btn.classList.add('open')}
+    if(PAGE!==id){go(id)}else{btn.classList.add('active')}
+  } else go(id);
+}
+function openSub(sec,i,label){go(sec,label)}
+function go(page,label){
+  PAGE=page;
+  document.querySelectorAll('.sb-main').forEach(b=>b.classList.toggle('active',b.dataset.sec===page));
+  document.querySelectorAll('.sb-sub').forEach(b=>b.classList.remove('active'));
+  toggleSidebar(false);toggleFab(true);
+  const root=$('page-root');
+  if(page==='dashboard')root.innerHTML=pDashboard();
+  else if(page==='business')root.innerHTML=pBusiness(label);
+  else if(page==='customers')root.innerHTML=pCustomers(label);
+  else if(page==='payments')root.innerHTML=pPayments(label);
+  else if(page==='invoices')root.innerHTML=pInvoices(label);
+  else if(page==='finance')root.innerHTML=pFinance(label);
+  else if(page==='cashflow')root.innerHTML=pCashflow(label);
+  else if(page==='ai')root.innerHTML=pAI(label);
+  else if(page==='reports')root.innerHTML=pReports(label);
+  else if(page==='settings')root.innerHTML=pSettings(label);
+  else if(page==='about')root.innerHTML=pAboutInApp();
+  window.scrollTo(0,0);
+}
+function globalSearch(q){
+  q=(q||'').trim().toLowerCase();if(!q)return toast('Type something to search.','bad');
+  const hits=[];
+  DB.customers.filter(c=>(c.name+c.phone+c.service).toLowerCase().includes(q)).forEach(c=>hits.push(['Customer',c.name,"go('customers','All Customers')"]));
+  DB.invoices.filter(i=>i.number.toLowerCase().includes(q)).forEach(i=>hits.push(['Invoice',i.number,"go('invoices','All Invoices')"]));
+  DB.payments.filter(p=>String(p.reference).toLowerCase().includes(q)||String(p.amount)===q).forEach(p=>hits.push(['Payment',money(p.amount),'go(\'payments\',\'Payment History\')']));
+  DB.expenses.filter(e=>(e.title+e.category).toLowerCase().includes(q)).forEach(e=>hits.push(['Expense',e.title,"go('finance','Expenses')"]));
+  const root=$('page-root');
+  root.innerHTML=`<div class="page-head"><h2>Search Results</h2><p>${hits.length} match(es) for “${esc(q)}”</p></div>
+  <div class="card">${hits.length?hits.map(h=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line)">
+    <span><span class="pill partial">${h[0]}</span> &nbsp;<b>${esc(h[1])}</b></span><button class="btn btn-sm btn-ghost" onclick="${h[2]}">Open →</button></div>`).join(''):'<div class="empty"><b>No matches found</b><p>Try a customer name, invoice number or amount.</p></div>'}</div>`;
+  toggleSidebar(false);
+}
+function toggleFab(hide){
+  const f=$('fab-root');
+  if(hide){f.innerHTML='';return}
+  if(f.innerHTML){f.innerHTML='';return}
+  const items={dashboard:['Add Customer',"openCustomer()"],customers:['Add Customer',"openCustomer()"],payments:['Add Payment',"openPayment()"],invoices:['Create Invoice',"openInvoice()"],finance:['Add Income / Expense',"openIncome();"],cashflow:['Add Upcoming Bill',"openBill()"],business:['Add Business Information',"openRecord()"],reports:['Export Customers Excel',"exportCSV('customers')"],settings:['Edit Business Settings',"openSubSettings('Business Settings')"]};
+  const list=[items[PAGE]||['Add Customer',"openCustomer()"],['Create Invoice',"openInvoice()"],['Add Expense',"openExpense()"],['Add Business Record',"openRecord()"]];
+  f.innerHTML=`<div class="fab-menu">${list.map((x,i)=>`<button onclick="toggleFab(true);${x[1]}"><span>${['➕','🧾','💸','📇'][i]}</span> ${x[0]}</button>`).join('')}</div>`;
+}
+function confirmDialog(title,msg,onYes){
+  openModal(title,`<p style="font-size:14.5px">${esc(msg)}</p>`,onYes,'Confirm','btn-danger','Yes, Continue');
+}
+
+/* ---------- modal engine ---------- */
+function openModal(title,body,onSubmitAttr,btnLabel,btnClass,btnText){
+  $('modal-root').innerHTML=`<div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal"><div class="modal-h"><h3>${esc(title)}</h3><button class="iconbtn" onclick="closeModal()">✕</button></div>
+    <div class="modal-b">${body}</div>
+    ${onSubmitAttr?`<div class="modal-f"><button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn ${btnClass||'btn-primary'}" onclick="${onSubmitAttr}">${esc(btnText||'Save')}</button></div>`:''}
+    </div></div>`;
+}
+function closeModal(){$('modal-root').innerHTML=''}
+
+/* =========== PAGE: DASHBOARD =========== */
+function finTotals(){
+  const income=DB.income.reduce((s,i)=>s+Number(i.amount||0),0);
+  const expenses=DB.expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+  const received=DB.payments.reduce((s,p)=>s+Number(p.amount||0),0);
+  const opening=Number(DB.business.opening||0)+DB.banks.reduce((s,b)=>s+Number(b.opening||0),0);
+  const billed=DB.customers.reduce((s,c)=>s+Number(c.total||0),0);
+  const outstanding=DB.customers.reduce((s,c)=>s+custBalance(c),0);
+  const overdue=DB.customers.filter(c=>custStatus(c)==='overdue').reduce((s,c)=>s+custBalance(c),0);
+  return{income,expenses,received,opening,cash:opening+received-expenses,billed,outstanding,overdue};
+}
+function monthSeries(){
+  const now=new Date(),labels=[],inc=[],exp=[];
+  for(let i=5;i>=0;i--){
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    labels.push(d.toLocaleDateString('en-IN',{month:'short'}));
+    const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+    inc.push(DB.income.filter(x=>(x.date||'').startsWith(key)).reduce((s,x)=>s+Number(x.amount||0),0));
+    exp.push(DB.expenses.filter(x=>(x.date||'').startsWith(key)).reduce((s,x)=>s+Number(x.amount||0),0));
+  }
+  return{labels,inc,exp};
+}
+function barChart(labels,series){
+  const max=Math.max(1,...series.flatMap(s=>s.data));
+  return `<div class="chart-row">${labels.map((l,i)=>`<div class="chart-col"><div class="bars">${series.map(s=>
+    `<div class="bar" style="height:${Math.max(2,s.data[i]/max*100)}%;background:${s.color}"></div>`).join('')}</div><small>${l}</small></div>`).join('')}</div>
+  <div class="legend">${series.map(s=>`<span><i style="background:${s.color}"></i>${s.name}</span>`).join('')}</div>`;
+}
+function aiSummaryText(){
+  const t=finTotals();
+  const overdueC=DB.customers.filter(c=>custStatus(c)==='overdue');
+  const soon=DB.bills.filter(b=>{const d=daysUntil(b.due);return d>=0&&d<=7});
+  const parts=[];
+  if(overdueC.length)parts.push(`${overdueC.length} customer${overdueC.length>1?'s':''} ha${overdueC.length>1?'ve':'s'} overdue payments totalling ${money(t.overdue)}. Contact ${overdueC.map(c=>c.name.split(' ')[0]).slice(0,2).join(' and ')} today to improve your expected cash position.`);
+  if(soon.length)parts.push(`${soon.length} bill${soon.length>1?'s are':' is'} due within 7 days (${soon.map(b=>b.name).join(', ')}). Keep cash ready.`);
+  if(t.expenses>t.income&&t.income>0)parts.push(`You are currently spending more than you earn. Review your expenses in Income & Expenses.`);
+  if(!parts.length)parts.push(`Things look healthy: ${money(t.received)} received, ${money(t.outstanding)} outstanding. Follow up on pending payments to keep cash flowing.`);
+  return parts.join(' ');
+}
+function pDashboard(){
+  const t=finTotals(),ms=monthSeries();
+  const upcoming=DB.bills.filter(b=>b.status!=='Paid').sort((a,b)=>a.due<b.due?-1:1).slice(0,4);
+  const recentTx=[...DB.payments.map(p=>({d:p.date,txt:'Payment from '+((custById(p.customerId)||{}).name||'Customer'),amt:+p.amount})),
+    ...DB.expenses.map(e=>({d:e.date,txt:e.title,amt:-e.amount}))].sort((a,b)=>a.d<b.d?1:-1).slice(0,6);
+  const recentInv=DB.invoices.slice(-4).reverse();
+  const overdueList=DB.customers.filter(c=>custStatus(c)==='overdue');
+  const sample=DB.customers.length>0;
+  const stat=(lbl,val,cls,ico,sub)=>`<div class="card stat"><div class="ico ${cls}">${ico}</div><div class="lbl">${lbl}</div><div class="val ${sub||''}">${val}</div></div>`;
+  return `
+  ${sample?`<div class="sample-banner">⚠️ This workspace contains clearly-labelled <b>demonstration records</b> for a Home Tutor business so you can explore every feature. Delete them and add your own real records anytime.</div>`:''}
+  <div class="banner">
+    <img src="${DB.business.banner||'/images/IMG_20261122_142338.png'}" alt="business banner">
+    <div class="cap"><h2>${esc(DB.business.name||'My Business')}</h2><p>Welcome back, ${esc(DB.profile.name||'Owner')} — here is your business at a glance.</p></div>
+    <div class="banner-actions">
+      <button class="bbtn" onclick="$('banner-file').click()">🖼 Change Banner</button>
+      <button class="bbtn" onclick="$('logo-file').click()">🎨 Change Logo</button>
+      <input type="file" id="banner-file" accept="image/*" class="hidden" onchange="changeImg('banner',this)">
+      <input type="file" id="logo-file" accept="image/*" class="hidden" onchange="changeImg('logo',this)">
+    </div>
+  </div>
+  <div class="grid g4" style="margin-bottom:16px">
+    ${stat('Total Income',money(t.income),'green','💵')}
+    ${stat('Total Expenses',money(t.expenses),'red','💸')}
+    ${stat('Money Received',money(t.received),'blue','📥')}
+    ${stat('Available Cash',money(t.cash),'violet','🏦')}
+  </div>
+  <div class="grid g4" style="margin-bottom:20px">
+    ${stat('Pending Payments',money(t.outstanding),'amber','⏳')}
+    ${stat('Overdue',money(t.overdue),'red','🔔')}
+    ${stat('Total Billed',money(t.billed),'blue','🧾')}
+    ${stat('Customers',DB.customers.length,'green','👥')}
+  </div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card"><h3>Monthly Income vs Expenses</h3>${barChart(ms.labels,[{name:'Income',data:ms.inc,color:'#0E9F6E'},{name:'Expenses',data:ms.exp,color:'#E02424'}])}</div>
+    <div class="card"><h3>Payment Collection vs Outstanding</h3>${barChart(DB.customers.slice(0,6).map(c=>c.name.split(' ')[0]),[{name:'Collected',data:DB.customers.slice(0,6).map(c=>custTotalPaid(c.id)),color:'#1D5BD6'},{name:'Outstanding',data:DB.customers.slice(0,6).map(c=>custBalance(c)),color:'#C27803'}])}</div>
+  </div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card ai-card"><div style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><div class="aico">🤖</div><h3>AI Recommendation</h3></div>
+      <p>${esc(aiSummaryText())}</p>
+      <div class="chips"><button class="chip" onclick="openCustomer()">+ Add Customer</button><button class="chip" onclick="openInvoice()">+ Create Invoice</button><button class="chip" onclick="openPayment()">+ Add Payment</button><button class="chip" onclick="openExpense()">+ Add Expense</button><button class="chip" onclick="go('reports')">View Reports</button></div></div>
+    <div class="card"><h3>🔔 Reminders & Notifications</h3>
+      ${overdueList.length?overdueList.map(c=>`<div class="alert red"><span>⏰</span><span><b>${esc(c.name)}</b> owes ${money(custBalance(c))} — payment overdue. <a href="#" onclick="sendWhatsApp('${c.id}');return false" style="font-weight:700">Send WhatsApp reminder →</a></span></div>`).join(''):'<div class="alert blue"><span>✓</span><span>No overdue customers right now.</span></div>'}
+      ${upcoming.map(b=>{const d=daysUntil(b.due);return d>=0&&d<=7?`<div class="alert amber"><span>📅</span><span><b>${esc(b.name)}</b> bill of ${money(b.amount)} due ${d===0?'today':'in '+d+' day(s)'}.</span></div>`:''}).join('')}
+    </div>
+  </div>
+  <div class="grid g3">
+    <div class="card"><h3>Upcoming Bills</h3>
+      ${upcoming.length?upcoming.map(b=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)"><span><b>${esc(b.name)}</b><br><small style="color:var(--muted)">Due ${fmtDate(b.due)}</small></span><b>${money(b.amount)}</b></div>`).join(''):'<div class="empty" style="padding:20px"><p>No upcoming bills.</p></div>'}</div>
+    <div class="card"><h3>Recent Transactions</h3>
+      ${recentTx.length?recentTx.map(x=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)"><span>${esc(x.txt)}<br><small style="color:var(--muted)">${fmtDate(x.d)}</small></span><b style="color:${x.amt>=0?'var(--success)':'var(--danger)'}">${x.amt>=0?'+':''}${money(x.amt)}</b></div>`).join(''):'<div class="empty" style="padding:20px"><p>No transactions yet.</p></div>'}</div>
+    <div class="card"><h3>Recent Invoices</h3>
+      ${recentInv.length?recentInv.map(i=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer" onclick="viewInvoice('${i.id}')"><span><b>${esc(i.number)}</b><br><small style="color:var(--muted)">${esc((custById(i.customerId)||{}).name||'')}</small></span><span class="pill ${statusOf(invTotal(i),invPaidDirect(i),i.due)[1]}">${statusOf(invTotal(i),invPaidDirect(i),i.due)[0]}</span></div>`).join(''):'<div class="empty" style="padding:20px"><p>No invoices yet.</p></div>'}</div>
+  </div>`;
+}
+function changeImg(kind,input){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=()=>{if(kind==='banner')DB.business.banner=r.result;saveDB();go(PAGE);toast((kind==='banner'?'Banner':'Logo')+' updated.','ok')};
+  r.readAsDataURL(file);
+}
+
+/* =========== PAGE: BUSINESS DETAILS =========== */
+function pBusiness(sub){
+  const active=sub||SUBS['business']||'Main Details';
+  SUBS['business']=active;
+  const tabs=['Main Details','Owner Profile','Records & Documents','Custom Tables','Account & Password'];
+  let body='';
+  if(active==='Main Details')body=bizMain();
+  else if(active==='Owner Profile')body=bizOwner();
+  else if(active==='Records & Documents')body=bizRecords();
+  else if(active==='Custom Tables')body=bizTables();
+  else body=bizAccount();
+  return `<div class="page-head"><h2>🏛️ Business Details</h2><div class="spacer"></div>
+    <button class="btn btn-primary btn-sm" onclick="openRecord()">+ Add Business Information</button>
+    <button class="btn btn-outline btn-sm" onclick="showImport()">⬆ Import Excel</button>
+    <button class="btn btn-outline btn-sm" onclick="$('doc-file').click()">📄 Upload Document</button>
+    <input type="file" id="doc-file" class="hidden" onchange="uploadDoc(this)"></div>
+    <div class="sub-nav">${tabs.map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('business','${t}')">${t}</button>`).join('')}</div>${body}
+    <div class="card" style="margin-top:20px;text-align:center;background:linear-gradient(135deg,#0B2447,#1D5BD6);border:none"><h3 style="color:#fff;justify-content:center">Quick Business Workspace Actions</h3>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px">
+      <button class="btn" style="background:#fff;color:var(--navy)" onclick="openNewTable()">➕ Create New Table</button>
+      <button class="btn" style="background:#fff;color:var(--navy)" onclick="showImport()">⬆ Import Excel</button>
+      <button class="btn" style="background:#fff;color:var(--navy)" onclick="openRecord()">📇 Add Business Information</button>
+      <button class="btn" style="background:#fff;color:var(--navy)" onclick="$('img-file').click()">🖼 Upload Image</button>
+      <input type="file" id="img-file" class="hidden" onchange="uploadDoc(this)">
+      <button class="btn" style="background:#fff;color:var(--navy)" onclick="$('doc-file2').click()">📄 Upload Document</button>
+      <input type="file" id="doc-file2" class="hidden" onchange="uploadDoc(this)">
+    </div></div>`;
+}
+function bizMain(){
+  const b=DB.business,a=b.address||{};
+  return `<div class="card" style="max-width:760px"><h3>Business Main Details</h3>
+  <form onsubmit="saveBizMain(event)">
+    <div class="f2"><div><label>Business Name</label><input id="bz-name" value="${esc(b.name)}" required></div>
+    <div><label>Category</label><select id="bz-cat">${Object.keys(CATEGORIES).map(k=>`<option ${k===b.category?'selected':''}>${k}</option>`).join('')}</select></div></div>
+    <label>Description</label><textarea id="bz-desc" rows="2">${esc(b.desc||'')}</textarea>
+    <div class="f2"><div><label>Owner Name</label><input id="bz-owner" value="${esc(b.owner||'')}"></div>
+    <div><label>Website</label><input id="bz-web" value="${esc(b.website||'')}" placeholder="https://"></div></div>
+    <label>Street / Area</label><input id="bz-street" value="${esc(a.street||'')}">
+    <div class="f3"><div><label>City</label><input id="bz-city" value="${esc(a.city||'')}"></div><div><label>PIN Code</label><input id="bz-pin" value="${esc(a.pin||'')}"></div><div><label>State</label><input id="bz-state" value="${esc(a.state||'')}"></div></div>
+    <label>Country</label><input id="bz-country" value="${esc(a.country||'India')}">
+    <div class="f2"><div><label>Business Phone</label><input id="bz-phone" value="${esc(b.phone||'')}"></div><div><label>Business Email</label><input id="bz-email" value="${esc(b.email||'')}"></div></div>
+    <div class="f2"><div><label>Registration No. (if any)</label><input id="bz-reg" value="${esc(b.regno||'')}"></div>
+    <div><label>Business Banner</label><input type="file" accept="image/*" onchange="changeImg('banner',this)"></div></div>
+    <button class="btn btn-primary" style="margin-top:16px">Save Changes</button>
+  </form></div>`;
+}
+function saveBizMain(e){
+  e.preventDefault();
+  const b=DB.business;b.name=$('bz-name').value.trim();b.category=$('bz-cat').value;b.desc=$('bz-desc').value.trim();b.owner=$('bz-owner').value.trim();b.website=$('bz-web').value.trim();
+  b.address={street:$('bz-street').value.trim(),city:$('bz-city').value.trim(),pin:$('bz-pin').value.trim(),state:$('bz-state').value.trim(),country:$('bz-country').value.trim()};
+  b.phone=$('bz-phone').value.trim();b.email=$('bz-email').value.trim();b.regno=$('bz-reg').value.trim();
+  saveDB();renderChrome();toast('Business details saved.','ok');
+}
+function bizOwner(){
+  const p=DB.profile,ad=DB.admin;
+  return `<div class="card" style="max-width:640px"><h3>Owner Profile</h3>
+  <div style="display:flex;gap:14px;align-items:center;margin-bottom:12px">
+    <img src="${$('sb-pic').src}" style="width:60px;height:60px;border-radius:99px;object-fit:cover">
+    <div><b>${esc(p.name||'')}</b><br><small style="color:var(--muted)">Role: ${esc(ad.role||'Super Admin')} · Member since ${fmtDate(ad.created||p.created)}</small></div></div>
+  <form onsubmit="saveOwner(event)">
+    <div class="f2"><div><label>Owner Name</label><input id="ow-name" value="${esc(p.name||'')}" required></div>
+    <div><label>Username</label><input value="${esc(ad.username||p.username||'')}" disabled></div></div>
+    <div class="f2"><div><label>Email</label><input id="ow-email" type="email" value="${esc(p.email||'')}"></div>
+    <div><label>Mobile</label><input id="ow-mobile" value="${esc(p.mobile||'')}"></div></div>
+    <label>Business Role</label><input value="${esc(ad.role||'Super Admin')}" disabled>
+    <button class="btn btn-primary" style="margin-top:14px">Save Profile</button>
+  </form></div>`;
+}
+function saveOwner(e){
+  e.preventDefault();
+  DB.profile.name=$('ow-name').value.trim();DB.profile.email=$('ow-email').value.trim();DB.profile.mobile=$('ow-mobile').value.trim();
+  const users=usersDB();const un=DB.profile.username;if(users[un]){Object.assign(users[un],{name:DB.profile.name,email:DB.profile.email,mobile:DB.profile.mobile});saveUsers(users)}
+  saveDB();renderChrome();toast('Owner profile saved.','ok');
+}
+function bizRecords(){
+  const docs=DB.records.filter(r=>r.type==='doc');
+  const notes=DB.records.filter(r=>r.type==='note');
+  return `<div class="grid g3">
+    ${notes.length?notes.map(r=>recordCard(r)).join(''):`<div class="card" style="grid-column:1/-1"><div class="empty"><div class="eico">📇</div><b>No business information records yet</b><p>Add headings, notes and reference information as beautiful cards.</p><button class="btn btn-primary btn-sm" onclick="openRecord()">+ Add Business Information</button></div></div>`}
+  </div>
+  ${docs.length?`<div class="card" style="margin-top:16px"><h3>📄 Uploaded Documents & Images</h3>${docs.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)"><span>📎 <b>${esc(r.title)}</b> <small style="color:var(--muted)">(${esc(r.docName||'file')} · ${fmtDate(r.date)})</small></span><span class="tbl-actions"><button class="iconbtn danger" onclick="delRecord('${r.id}')">🗑</button></span></div>`).join('')}</div>`:''}`;
+}
+function recordCard(r){
+  const icons={note:'📇',table:'📊'};
+  return `<div class="record-card"><div class="rico">${icons[r.type]||'📇'}</div>
+  <div style="flex:1;min-width:0"><div class="cat">${esc(r.category||'General')}</div><b>${esc(r.title)}</b>
+  <p>${esc((r.body||'').slice(0,110))}${(r.body||'').length>110?'…':''}</p><div class="meta">Created ${fmtDate(r.date)}</div>
+  <div style="display:flex;gap:2px;margin-top:8px;flex-wrap:wrap">
+    <button class="btn btn-sm btn-ghost" onclick="viewRecord('${r.id}')">View</button>
+    <button class="btn btn-sm btn-ghost" onclick="openRecord('${r.id}')">Edit</button>
+    <button class="btn btn-sm btn-ghost" onclick="downloadRecord('${r.id}','pdf')">PDF</button>
+    <button class="btn btn-sm btn-ghost" onclick="downloadRecord('${r.id}','img')">Image</button>
+    <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="delRecord('${r.id}')">Delete</button>
+  </div></div></div>`;
+}
+function openRecord(id){
+  const r=id?DB.records.find(x=>x.id===id):null;
+  openModal(r?'Edit Business Information':'Add Business Information',`
+    <label>Title</label><input id="rc-title" value="${esc(r?r.title:'')}" placeholder="e.g. Licence Details">
+    <label>Category</label><select id="rc-cat">${['General','Finance','Legal','Notes','Vendor','Other'].map(c=>`<option ${r&&r.category===c?'selected':''}>${c}</option>`).join('')}</select>
+    <label>Information / Notes</label><textarea id="rc-body" rows="5" placeholder="Add paragraphs, notes and details here…">${esc(r?r.body||'':'')}</textarea>`,
+    `saveRecord(${r?`'${r.id}'`:'null'})`);
+}
+function saveRecord(id){
+  const title=$('rc-title').value.trim();if(!title)return toast('Please enter a title.','bad');
+  if(id){const r=DB.records.find(x=>x.id===id);r.title=title;r.category=$('rc-cat').value;r.body=$('rc-body').value.trim()}
+  else DB.records.push({id:uid(),type:'note',title,category:$('rc-cat').value,body:$('rc-body').value.trim(),date:today()});
+  saveDB();closeModal();logActivity('Business record "'+title+'" saved');go('business','Records & Documents');toast('Information saved as a card.','ok');
+}
+function viewRecord(id){
+  const r=DB.records.find(x=>x.id===id);
+  openModal(r.title,`<span class="pill partial">${esc(r.category)}</span><p style="margin-top:12px;white-space:pre-wrap;font-size:14.5px">${esc(r.body)}</p><p class="hint">Created ${fmtDate(r.date)}</p>`,null);
+}
+function delRecord(id){
+  confirmDialog('Delete Record','Delete this saved information? This cannot be undone.',()=>{
+    DB.records=DB.records.filter(x=>x.id!==id);saveDB();closeModal();go('business');toast('Record deleted.','ok')});
+}
+function downloadRecord(id,mode){
+  const r=DB.records.find(x=>x.id===id);
+  if(mode==='pdf'){
+    const w=window.open('','_blank');
+    w.document.write(`<html><head><title>${esc(r.title)}</title><style>body{font-family:Arial;padding:40px;color:#13233B}h1{color:#0B2447}.cat{color:#7C5CFC;font-weight:bold;text-transform:uppercase;font-size:12px}table{width:100%;border-collapse:collapse;margin-top:20px}td{border:1px solid #ddd;padding:8px}</style></head><body><h1>BackOffice AI — Business Report</h1><p class="cat">${esc(r.category)} · ${esc(DB.business.name)} · ${fmtDate(r.date)}</p><h2>${esc(r.title)}</h2><p style="white-space:pre-wrap">${esc(r.body)}</p></body></html>`);
+    w.document.close();w.print();
+  } else {
+    const w=window.open('','_blank','width=620,height=760');
+    w.document.write(`<html><head><title>${esc(r.title)}</title><style>body{margin:0;font-family:Arial;background:#13233B;display:flex;align-items:center;justify-content:center;min-height:100vh}.rep{background:#fff;border-radius:18px;width:540px;overflow:hidden}.hd{background:linear-gradient(135deg,#0B2447,#1D5BD6);color:#fff;padding:26px}.hd h1{font-size:20px;margin:0}.sec{padding:22px 26px}.cat{color:#7C5CFC;font-weight:bold;text-transform:uppercase;font-size:11px;letter-spacing:1px}h2{color:#0B2447;margin:6px 0 12px}.body{font-size:14px;line-height:1.6;white-space:pre-wrap;color:#334563}.ft{background:#F4F6FB;padding:14px 26px;font-size:11px;color:#5B6B85;text-align:center}</style></head><body><div class="rep"><div class="hd"><h1>🧠 BackOffice AI</h1><small>${esc(DB.business.name)}</small></div><div class="sec"><div class="cat">${esc(r.category)} Report</div><h2>${esc(r.title)}</h2><div class="body">${esc(r.body)}</div></div><div class="ft">BackOffice AI © 2026. All Rights Reserved. · Generated ${fmtDate(today())}</div></div></body></html>`);
+    w.document.close();
+  }
+}
+function uploadDoc(input){
+  const f=input.files[0];if(!f)return toast('No file selected.','bad');
+  DB.records.push({id:uid(),type:'doc',title:f.name.replace(/\.[^.]+$/,''),category:'Documents',body:'Uploaded document: '+f.name,docName:f.name,date:today()});
+  saveDB();go('business','Records & Documents');toast('Document "'+f.name+'" added to your library.','ok');
+}
+/* custom tables */
+function bizTables(){
+  const ts=DB.tables;
+  return `<div class="card-head"><h3>Excel-like Custom Tables</h3><div class="spacer"></div><button class="btn btn-primary btn-sm" onclick="openNewTable()">+ Add Table</button></div>
+  ${ts.length?ts.map(t=>`
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-head"><h3 contenteditable="true" style="outline:none;min-width:160px" onblur="renameTable('${t.id}',this.textContent)">${esc(t.name)}</h3><div class="spacer"></div>
+        <button class="btn btn-sm btn-outline" onclick="tblAddCol('${t.id}')">+ Column</button>
+        <button class="btn btn-sm btn-outline" onclick="tblAddRow('${t.id}')">+ Row</button>
+        <button class="btn btn-sm btn-outline" onclick="exportTable('${t.id}')">⬇ Excel</button>
+        <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="delTable('${t.id}')">Delete</button></div>
+      <input placeholder="🔍 Search rows…" style="margin-bottom:10px" oninput="filterTable('${t.id}',this.value)">
+      <div class="tbl-wrap" id="tblwrap-${t.id}">${tblHTML(t)}</div>
+    </div>`).join(''):`<div class="card"><div class="empty"><div class="eico">📊</div><b>No custom tables yet</b><p>Create an Excel-like table to track anything: inventory, schedules, attendance…</p><button class="btn btn-primary btn-sm" onclick="openNewTable()">+ Create New Table</button></div></div>`}`;
+}
+function tblHTML(t,filter){
+  let rows=t.rows.map((r,i)=>({r,i}));
+  if(filter)rows=rows.filter(x=>x.r.some(c=>String(c).toLowerCase().includes(filter.toLowerCase())));
+  return `<table><thead><tr><th>#</th>${t.columns.map((c,ci)=>`<th>${esc(c)} <button class="iconbtn" style="width:22px;height:22px;font-size:10px" onclick="sortTable('${t.id}',${ci})" title="Sort">⇅</button></th>`).join('')}<th></th></tr></thead>
+  <tbody>${rows.map(x=>`<tr data-search="${esc(x.r.join(' ')).toLowerCase()}"><td style="color:var(--muted)">${x.i+1}</td>
+    ${x.r.map((c,ci)=>`<td><div class="editable-cell" contenteditable="true" onblur="tblCell('${t.id}',${x.i},${ci},this.textContent)">${esc(c)}</div></td>`).join('')}
+    <td class="tbl-actions"><button class="iconbtn danger" onclick="tblDelRow('${t.id}',${x.i})">🗑</button></td></tr>`).join('')}</tbody></table>`;
+}
+function filterTable(id,q){
+  document.querySelectorAll(`#tblwrap-${id} tbody tr`).forEach(tr=>{tr.style.display=(tr.dataset.search||'').includes(q.toLowerCase())?'':'none'});
+}
+function openNewTable(){
+  openModal('Create New Table',`<label>Table Name</label><input id="tb-name" placeholder="e.g. Inventory, Batch Schedule, Attendance">`,`saveNewTable()`);
+}
+function saveNewTable(){
+  const n=$('tb-name').value.trim();if(!n)return toast('Enter a table name.','bad');
+  DB.tables.push({id:uid(),name:n,columns:['Name','Details'],rows:[['','']]});
+  saveDB();closeModal();go('business','Custom Tables');toast('Table created. Click cells to edit.','ok');
+}
+function tblOf(id){return DB.tables.find(t=>t.id===id)}
+function renameTable(id,v){const t=tblOf(id);if(v.trim()){t.name=v.trim();saveDB()}}
+function tblCell(id,ri,ci,v){tblOf(id).rows[ri][ci]=v;saveDB()}
+function tblAddCol(id){const t=tblOf(id);t.columns.push('Column '+(t.columns.length+1));t.rows.forEach(r=>r.push(''));saveDB();go('business','Custom Tables')}
+function tblAddRow(id){const t=tblOf(id);t.rows.push(t.columns.map(()=>''));saveDB();go('business','Custom Tables')}
+function tblDelRow(id,ri){tblOf(id).rows.splice(ri,1);saveDB();go('business','Custom Tables')}
+function sortTable(id,ci){
+  const t=tblOf(id);t.rows.sort((a,b)=>String(a[ci]).localeCompare(String(b[ci]),undefined,{numeric:true}));saveDB();go('business','Custom Tables');
+}
+function delTable(id){confirmDialog('Delete Table','Delete this table and all its rows?',()=>{DB.tables=DB.tables.filter(t=>t.id!==id);saveDB();closeModal();go('business','Custom Tables');toast('Table deleted.','ok')})}
+function exportTable(id){
+  const t=tblOf(id);
+  downloadCSV(t.name+'.csv',[t.columns,...t.rows]);
+}
+function bizAccount(){
+  return `<div class="card" style="max-width:620px"><h3>Account & Password Management</h3>
+  <form onsubmit="saveAccount(event)">
+    <div class="f2"><div><label>Change Username</label><input id="ac-user" value="${esc(DB.admin.username||'')}"></div>
+    <div><label>Change Email</label><input id="ac-email" type="email" value="${esc(DB.admin.email||'')}"></div></div>
+    <div class="f2"><div><label>Update Mobile</label><input id="ac-mobile" value="${esc(DB.profile.mobile||'')}"></div>
+    <div><label>Recovery Mobile</label><input id="ac-rec" value="${esc(DB.admin.recovery||'')}"></div></div>
+    <label>Current Password</label><input id="ac-cur" type="password" placeholder="Required to change password">
+    <div class="f2"><div><label>New Password</label><input id="ac-new" type="password" placeholder="Leave blank to keep current"></div>
+    <div><label>Confirm New Password</label><input id="ac-new2" type="password"></div></div>
+    <p class="hint">Passwords are never displayed or stored in plain text. Sessions are limited to this device.</p>
+    <div class="alert blue" style="margin-top:10px"><span>🖥</span><span>Active session: this device · logged in as <b>@${esc(DB.admin.username)}</b></span></div>
+    <button class="btn btn-primary" style="margin-top:14px">Update Account</button>
+  </form></div>`;
+}
+function saveAccount(e){
+  e.preventDefault();
+  const err=m=>{toast(m,'bad')};
+  const nu=$('ac-user').value.trim(),ne=$('ac-email').value.trim();
+  const users=usersDB(),old=DB.admin.username;
+  if(nu!==old&&users[nu])return err('That username is already taken.');
+  if(users[old]){users[nu]={...users[old],username:nu,email:ne,mobile:$('ac-mobile').value.trim()};
+    if(nu!==old)delete users[old];saveUsers(users);
+    const biz=localStorage.getItem('backoffice_ai_biz_'+old);if(biz){localStorage.setItem('backoffice_ai_biz_'+nu,biz);localStorage.removeItem('backoffice_ai_biz_'+old)}}
+  DB.admin.username=nu;DB.admin.email=ne;DB.admin.recovery=$('ac-rec').value.trim();DB.profile.mobile=$('ac-mobile').value.trim();
+  const np=$('ac-new').value;
+  if(np){if(users[old]||users[nu]){} if(np.length<6)return err('New password must be at least 6 characters.');
+    if($('ac-new').value!==$('ac-new2').value)return err('New passwords do not match.');
+    if(!$('ac-cur').value)return err('Enter your current password to change it.');
+    const acc=users[nu];if(acc&&acc.pass!==hash($('ac-cur').value))return err('Current password is incorrect.');
+    if(acc){acc.pass=hash(np);saveUsers(users)}}
+  saveDB();renderChrome();toast('Account details updated.','ok');
+}
+
+/* =========== PAGE: CUSTOMERS =========== */
+function pCustomers(sub){
+  const active=sub||SUBS['customers']||'All Customers';
+  SUBS['customers']=active;
+  const tabs=['All Customers','Customer Details','Payment History'];
+  let body='';
+  if(active==='All Customers')body=custList();
+  else if(active==='Customer Details')body=custDetail(SUBS.customerId);
+  else body=custPayHistory();
+  return `<div class="page-head"><h2>👥 Customers</h2><div class="spacer"></div>
+    <button class="btn btn-primary" onclick="openCustomer()">+ Add Customer</button></div>
+    <div class="sub-nav">${tabs.map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('customers','${t}')">${t}</button>`).join('')}</div>${body}`;
+}
+function custList(){
+  const cs=DB.customers;
+  if(!cs.length)return emptyState('👤','No customers added yet','Click Add Customer to get started — customers will then appear in invoice and payment forms.',"openCustomer()","+ Add Customer");
+  return `<div class="card"><div class="card-head"><input placeholder="🔍 Search by name, phone, service…" style="max-width:320px" oninput="custFilter(this.value)"></div>
+  <div class="tbl-wrap"><table id="cust-table"><thead><tr><th>ID</th><th>Name</th><th>Mobile</th><th>Service / Product</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th></th></tr></thead>
+  <tbody>${cs.map((c,i)=>{const paid=custTotalPaid(c.id),rem=custBalance(c),st=custStatus(c);
+    return `<tr class="rowclick" data-search="${esc((c.name+' '+c.phone+' '+c.service).toLowerCase())}" onclick="viewCustomer('${c.id}')">
+    <td style="color:var(--muted)">CU-${String(i+1).padStart(3,'0')}</td><td><b>${esc(c.name)}</b><br><small style="color:var(--muted)">${esc(c.email||'')}</small></td>
+    <td>${esc(c.phone)}</td><td>${esc(c.service||'')}</td><td>${money(c.total)}</td><td style="color:var(--success)">${money(paid)}</td>
+    <td style="color:${rem>0?'var(--danger)':'var(--success)'}"><b>${money(rem)}</b></td>
+    <td><span class="pill ${st}">${statusOf(c.total,paid,c.dueDate)[0]}</span></td>
+    <td class="tbl-actions" onclick="event.stopPropagation()">
+      <button class="iconbtn" title="WhatsApp reminder" onclick="sendWhatsApp('${c.id}')">💬</button>
+      <button class="iconbtn" title="Edit" onclick="openCustomer('${c.id}')">✏️</button>
+      <button class="iconbtn danger" title="Delete" onclick="delCustomer('${c.id}')">🗑</button></td></tr>`}).join('')}</tbody></table></div></div>`;
+}
+function custFilter(q){document.querySelectorAll('#cust-table tbody tr').forEach(tr=>{tr.style.display=tr.dataset.search.includes(q.toLowerCase())?'':'none'})}
+function emptyState(icon,title,desc,onclick,btn){
+  return `<div class="card"><div class="empty"><div class="eico">${icon}</div><b>${title}</b><p>${desc}</p><button class="btn btn-primary btn-sm" onclick="${onclick}">${btn}</button></div></div>`;
+}
+function openCustomer(id){
+  const c=id?custById(id):null;
+  openModal(c?'Edit Customer':'Add Customer',`
+    <label>Customer Name *</label><input id="c-name" value="${esc(c?c.name:'')}" required>
+    <div class="f2"><div><label>Phone Number (with WhatsApp)</label><input id="c-phone" value="${esc(c?c.phone:'')}" placeholder="10-digit number"></div>
+    <div><label>Email</label><input id="c-email" type="email" value="${esc(c?c.email:'')}"></div></div>
+    <label>Address</label><input id="c-addr" value="${esc(c?c.address:'')}">
+    <div class="f2"><div><label>Customer Type</label><select id="c-type">${['Individual','Business'].map(t=>`<option ${c&&c.type===t?'selected':''}>${t}</option>`).join('')}</select></div>
+    <div><label>Service / Product</label><input id="c-service" value="${esc(c?c.service:'')}"></div></div>
+    <div class="f2"><div><label>Total Agreed Amount (₹)</label><input id="c-total" type="number" min="0" value="${c?c.total:''}"></div>
+    <div><label>Due Date</label><input id="c-due" type="date" value="${c?c.dueDate||'':''}"></div></div>
+    <label>Notes</label><textarea id="c-notes" rows="2">${esc(c?c.notes||'':'')}</textarea>`,
+    `saveCustomer(${c?`'${c.id}'`:'null'})`);
+}
+function saveCustomer(id){
+  const name=$('c-name').value.trim();if(!name)return toast('Customer name is required.','bad');
+  const data={name,phone:$('c-phone').value.trim(),email:$('c-email').value.trim(),address:$('c-addr').value.trim(),type:$('c-type').value,service:$('c-service').value.trim(),total:Number($('c-total').value||0),dueDate:$('c-due').value,notes:$('c-notes').value.trim()};
+  if(id){Object.assign(custById(id),data);logActivity('Customer '+name+' updated')}
+  else{DB.customers.push({id:uid(),...data});logActivity('Customer '+name+' added');toast('Customer added. They now appear in invoice & payment forms.','ok')}
+  saveDB();closeModal();go('customers','All Customers');
+}
+function delCustomer(id){
+  const c=custById(id);
+  confirmDialog('Delete Customer',`Delete ${c.name}? Their invoices and payment history will also be removed.`,()=>{
+    DB.customers=DB.customers.filter(x=>x.id!==id);
+    DB.invoices=DB.invoices.filter(i=>i.customerId!==id);
+    DB.payments=DB.payments.filter(p=>p.customerId!==id);
+    saveDB();closeModal();go('customers','All Customers');toast('Customer deleted.','ok')});
+}
+function viewCustomer(id){SUBS.customerId=id;go('customers','Customer Details')}
+function custDetail(id){
+  const c=custById(id);
+  if(!c)return emptyState('👤','Customer not found','The customer may have been deleted.',"go('customers','All Customers')",'Back to All Customers');
+  const paid=custTotalPaid(id),rem=custBalance(c),st=custStatus(c);
+  const invs=custInvoices(id);
+  const pays=DB.payments.filter(p=>p.customerId===id).sort((a,b)=>a.date<b.date?1:-1);
+  return `<div class="grid g3" style="margin-bottom:16px">
+    <div class="card stat"><div class="lbl">Customer</div><div class="val" style="font-size:19px">${esc(c.name)}</div><small style="color:var(--muted)">${esc(c.phone||'')} · ${esc(c.email||'')}<br>${esc(c.address||'')}<br>${esc(c.type||'')} — ${esc(c.service||'')}</small>
+      <div style="display:flex;gap:6px;margin-top:10px"><button class="btn btn-sm btn-outline" onclick="openCustomer('${id}')">Edit</button><button class="btn btn-sm btn-outline" onclick="openPayment('${id}')">+ Payment</button><button class="btn btn-sm btn-outline" onclick="sendWhatsApp('${id}')">💬 Remind</button></div></div>
+    <div class="card stat"><div class="lbl">Total Paid</div><div class="val pos">${money(paid)}</div><small style="color:var(--muted)">of ${money(c.total)} agreed</small></div>
+    <div class="card stat"><div class="lbl">Pending Balance</div><div class="val ${rem>0?'neg':''}">${money(rem)}</div><span class="pill ${st}" style="align-self:flex-start;margin-top:6px">${statusOf(c.total,paid,c.dueDate)[0]}</span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>Invoices</h3>${invs.length?invs.map(i=>{const s=statusOf(invTotal(i),invPaidDirect(i),i.due);
+      return `<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer" onclick="viewInvoice('${i.id}')"><span><b>${esc(i.number)}</b><br><small style="color:var(--muted)">Due ${fmtDate(i.due)}</small></span><span><b>${money(invTotal(i))}</b> <span class="pill ${s[1]}">${s[0]}</span></span></div>`}).join(''):'<p class="hint">No invoices for this customer yet.</p>'}</div>
+    <div class="card"><h3>Payment History</h3>${pays.length?pays.map(p=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)"><span>${fmtDate(p.date)} · ${esc(p.method)}<br><small style="color:var(--muted)">${esc(p.reference||'')}</small></span><b style="color:var(--success)">+${money(p.amount)}</b></div>`).join(''):'<p class="hint">No payments recorded yet.</p>'}
+    <h3 style="margin-top:14px">Previous Reminders & Notes</h3><p class="hint">${esc(c.notes||'No notes for this customer. Edit the customer to add notes.')}</p></div>
+  </div>`;
+}
+function custPayHistory(){
+  const rows=DB.customers.map(c=>{const paid=custTotalPaid(c.id);return{name:c.name,paid,bal:custBalance(c),st:custStatus(c),last:(DB.payments.filter(p=>p.customerId===c.id).sort((a,b)=>a.date<b.date?1:-1)[0]||{}).date}});
+  if(!rows.length)return emptyState('🧮','No customer balances yet','Add customers and record payments to see balances here.',"openCustomer()","+ Add Customer");
+  return `<div class="card"><div class="tbl-wrap"><table><thead><tr><th>Customer</th><th>Total Paid</th><th>Outstanding Balance</th><th>Status</th><th>Last Payment</th></tr></thead>
+  <tbody>${rows.map(r=>`<tr><td><b>${esc(r.name)}</b></td><td style="color:var(--success)">${money(r.paid)}</td><td><b>${money(r.bal)}</b></td><td><span class="pill ${r.st}">${statusOf(r.paid+r.bal,r.paid)[0]}</span></td><td>${fmtDate(r.last)}</td></tr>`).join('')}</tbody></table></div>
+  <button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="exportCSV('customer-history')">⬇ Export Excel (CSV)</button></div>`;
+}
+
+/* =========== PAGE: PAYMENTS & BANKING =========== */
+function pPayments(sub){
+  const active=sub||SUBS['payments']||'Payment Overview';
+  SUBS['payments']=active;
+  const tabs=['Payment Overview','Bank Accounts','Bank Balance','Customer Payments & Dues','Reminders','Payment History'];
+  let body='';
+  if(active==='Payment Overview')body=payOverview();
+  else if(active==='Bank Accounts')body=bankAccounts();
+  else if(active==='Bank Balance')body=bankBalance();
+  else if(active==='Customer Payments & Dues')body=payDues();
+  else if(active==='Reminders')body=payReminders();
+  else body=payHistory();
+  return `<div class="page-head"><h2>🏦 Payments & Banking</h2><div class="spacer"></div>
+    <button class="btn btn-primary" onclick="openPayment()">+ Add Customer Payment</button></div>
+    <div class="sub-nav">${tabs.map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('payments','${t}')">${t}</button>`).join('')}</div>${body}`;
+}
+function payOverview(){
+  const t=finTotals();
+  return `<div class="grid g4" style="margin-bottom:16px">
+    <div class="card stat"><div class="lbl">Total Received</div><div class="val pos">${money(t.received)}</div></div>
+    <div class="card stat"><div class="lbl">Total Pending</div><div class="val">${money(t.outstanding-t.overdue)}</div></div>
+    <div class="card stat"><div class="lbl">Total Overdue</div><div class="val neg">${money(t.overdue)}</div></div>
+    <div class="card stat"><div class="lbl">Available Balance</div><div class="val">${money(t.cash)}</div></div></div>
+  <div class="card"><h3>Payment Collection by Customer</h3>
+    ${DB.customers.length?barChart(DB.customers.map(c=>c.name.split(' ')[0]),[{name:'Collected',data:DB.customers.map(c=>custTotalPaid(c.id)),color:'#1D5BD6'},{name:'Outstanding',data:DB.customers.map(c=>custBalance(c)),color:'#C27803'}]):'<p class="hint">Add customers to see the collection chart.</p>'}</div>`;
+}
+function bankAccounts(){
+  const bs=DB.banks;
+  return `<div class="card-head"><h3>Your Bank Accounts</h3><div class="spacer"></div><button class="btn btn-primary btn-sm" onclick="openBank()">+ Add Bank Account</button></div>
+  ${bs.length?`<div class="grid g3">${bs.map(b=>`<div class="card">
+    <h3>🏦 ${esc(b.bank)} ${b.primary?'<span class="pill paid">Primary</span>':''}</h3>
+    <p style="font-size:13.5px;line-height:1.9"><b>Holder:</b> ${esc(b.holder)}<br><b>Account:</b> ${esc(maskAcc(b.accnum))}<br><b>IFSC:</b> ${esc(b.ifsc)}<br><b>Branch:</b> ${esc(b.branch)}<br><b>UPI:</b> ${esc(b.upi)}<br><b>Mobile:</b> ${esc(b.mobile)}</p>
+    <div style="display:flex;gap:4px;margin-top:10px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-ghost" onclick="openBank('${b.id}')">Edit</button>
+      ${b.primary?'':'<button class="btn btn-sm btn-ghost" onclick="setPrimary(\''+b.id+'\')">Set Primary</button>'}
+      <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="delBank('${b.id}')">Delete</button></div></div>`).join('')}</div>`
+  :emptyState('🏦','No bank accounts added yet','Add a bank account to record where money comes in and goes out.',"openBank()","+ Add Bank Account")}`;
+}
+function maskAcc(n){n=String(n||'');if(n.length<=4)return n;return '•'.repeat(Math.max(4,n.length-4))+n.slice(-4)}
+function openBank(id){
+  const b=id?DB.banks.find(x=>x.id===id):null;
+  openModal(b?'Edit Bank Account':'Add Bank Account',`
+    <label>Bank Name *</label><input id="bk-name" value="${esc(b?b.bank:'')}" required>
+    <div class="f2"><div><label>Account Holder</label><input id="bk-holder" value="${esc(b?b.holder:'')}"></div>
+    <div><label>Account Number</label><input id="bk-acc" value="${esc(b?b.accnum:'')}"></div></div>
+    <div class="f2"><div><label>IFSC Code</label><input id="bk-ifsc" value="${esc(b?b.ifsc:'')}"></div>
+    <div><label>Branch</label><input id="bk-branch" value="${esc(b?b.branch:'')}"></div></div>
+    <div class="f2"><div><label>UPI ID</label><input id="bk-upi" value="${esc(b?b.upi:'')}"></div>
+    <div><label>Registered Mobile</label><input id="bk-mobile" value="${esc(b?b.mobile:'')}"></div></div>`,
+    `saveBank(${b?`'${b.id}'`:'null'})`);
+}
+function saveBank(id){
+  const bank=$('bk-name').value.trim();if(!bank)return toast('Bank name is required.','bad');
+  const d={bank,holder:$('bk-holder').value.trim(),accnum:$('bk-acc').value.trim(),ifsc:$('bk-ifsc').value.trim(),branch:$('bk-branch').value.trim(),upi:$('bk-upi').value.trim(),mobile:$('bk-mobile').value.trim()};
+  if(id)Object.assign(DB.banks.find(x=>x.id===id),d);else DB.banks.push({id:uid(),primary:DB.banks.length===0,opening:0,...d});
+  saveDB();closeModal();go('payments','Bank Accounts');toast('Bank account saved. Sensitive details are masked in normal views.','ok');
+}
+function setPrimary(id){DB.banks.forEach(b=>b.primary=b.id===id);saveDB();go('payments','Bank Accounts')}
+function delBank(id){confirmDialog('Delete Bank Account','Delete this bank account?',()=>{DB.banks=DB.banks.filter(b=>b.id!==id);saveDB();closeModal();go('payments','Bank Accounts');toast('Bank account deleted.','ok')})}
+function bankBalance(){
+  const t=finTotals(),b=DB.banks.find(x=>x.primary)||DB.banks[0];
+  const opening=Number(DB.business.opening||0)+(b?Number(b.opening||0):0);
+  return `<div class="grid g4" style="margin-bottom:16px">
+    <div class="card stat"><div class="lbl">Opening Balance</div><div class="val">${money(opening)}</div></div>
+    <div class="card stat"><div class="lbl">Total Incoming</div><div class="val pos">+${money(t.received)}</div></div>
+    <div class="card stat"><div class="lbl">Total Outgoing</div><div class="val neg">−${money(t.expenses)}</div></div>
+    <div class="card stat"><div class="lbl">Available Balance</div><div class="val">${money(t.cash)}</div></div></div>
+  <div class="card" style="max-width:560px"><h3>Manual Balance Update</h3>
+    <p class="hint" style="margin-bottom:10px">BackOffice AI shows your <b>recorded</b> balance based on your own entries. It is not a real-time bank feed — connect an authorized banking integration to see live balances.</p>
+    <label>Recorded Current Balance (₹)</label><input id="bal-cur" type="number" value="${t.cash.toFixed(0)}">
+    <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="updateOpening()">Update Recorded Balance</button>
+    <h3 style="margin-top:18px">Recent Bank Transactions</h3>
+    ${(t.received||t.expenses)?`<div style="font-size:13.5px">${[...DB.payments.map(p=>({d:p.date,t:'Payment received',a:p.amount})),...DB.expenses.map(e=>({d:e.date,t:e.title,a:-e.amount}))].sort((x,y)=>x.d<y.d?1:-1).slice(0,8).map(x=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)"><span>${esc(x.t)} <small style="color:var(--muted)">· ${fmtDate(x.d)}</small></span><b style="color:${x.a>=0?'var(--success)':'var(--danger)'}">${x.a>=0?'+':''}${money(x.a)}</b></div>`).join('')}</div>`:'<p class="hint">No transactions recorded yet.</p>'}
+  </div>`;
+}
+function updateOpening(){
+  const t=finTotals();const want=Number($('bal-cur').value||0);
+  const diff=want-t.cash;
+  if(DB.banks.length)DB.banks[0].opening=Number(DB.banks[0].opening||0)+diff;
+  else DB.business.opening=Number(DB.business.opening||0)+diff;
+  saveDB();go('payments','Bank Balance');toast('Recorded balance updated.','ok');
+}
+function payDues(){
+  const cs=DB.customers;
+  if(!cs.length)return emptyState('💳','No customers yet','Add customers first, then record their payments and dues here.',"openCustomer()","+ Add Customer");
+  return `<div class="card"><div class="tbl-wrap"><table><thead><tr><th>Customer</th><th>Mobile</th><th>Total Agreed</th><th>Amount Paid</th><th>Remaining</th><th>Due Date</th><th>Status</th><th></th></tr></thead>
+  <tbody>${cs.map(c=>{const paid=custTotalPaid(c.id),rem=custBalance(c),s=statusOf(c.total,paid,c.dueDate);
+    return `<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.phone)}</td><td>${money(c.total)}</td><td style="color:var(--success)">${money(paid)}</td><td><b style="color:${rem>0?'var(--danger)':'var(--success)'}">${money(rem)}</b></td><td>${fmtDate(c.dueDate)}</td><td><span class="pill ${s[1]}">${s[0]}</span></td>
+    <td class="tbl-actions"><button class="btn btn-sm btn-outline" onclick="openPayment('${c.id}')">+ Payment</button><button class="iconbtn" onclick="sendWhatsApp('${c.id}')" title="WhatsApp reminder">💬</button></td></tr>`}).join('')}</tbody></table></div></div>`;
+}
+function payReminders(){
+  const pending=DB.customers.filter(c=>custBalance(c)>0);
+  if(!pending.length)return emptyState('✅','No pending payments','No customers have outstanding balances. Great job!',null,'');
+  return `<div class="grid g2">${pending.map(c=>{const rem=custBalance(c),s=custStatus(c);
+    return `<div class="card"><h3>${esc(c.name)} <span class="pill ${s}">${statusOf(c.total,custTotalPaid(c.id),c.dueDate)[0]}</span></h3>
+    <p style="font-size:13.5px">Pending: <b style="color:var(--danger)">${money(rem)}</b> for ${esc(c.service||'services')} ${c.dueDate?`· due ${fmtDate(c.dueDate)}`:''}</p>
+    <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="sendWhatsApp('${c.id}')">💬 Prepare WhatsApp Reminder</button></div>`}).join('')}</div>
+  <p class="hint" style="margin-top:12px">WhatsApp opens on your device with the message pre-filled; the message is sent by you. BackOffice AI records that a reminder was prepared — it does not claim delivery confirmation.</p>`;
+}
+function openPayment(cid){
+  if(!DB.customers.length)return toast('Add a customer first.','bad');
+  const c=cid?custById(cid):DB.customers[0];
+  openModal('Add Customer Payment',`
+    <label>Customer</label><select id="p-cust" onchange="payCustChanged()">${DB.customers.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
+    <div class="f2"><div><label>Invoice (optional)</label><select id="p-inv"><option value="">— none —</option></select></div>
+    <div><label>Total Agreed Amount (₹)</label><input id="p-total" type="number" value="${c.total}" readonly style="background:var(--bg)"></div></div>
+    <div class="f3"><div><label>Amount Already Paid (₹)</label><input id="p-already" type="number" value="${custTotalPaid(c.id)}" readonly style="background:var(--bg)"></div>
+    <div><label>Amount Received Now (₹) *</label><input id="p-amt" type="number" min="1" required></div>
+    <div><label>Remaining After (₹)</label><input id="p-rem" type="number" value="${custBalance(c)}" readonly style="background:var(--bg)"></div></div>
+    <div class="f3"><div><label>Payment Date</label><input id="p-date" type="date" value="${today()}"></div>
+    <div><label>Payment Method</label><select id="p-method">${['Cash','UPI','Bank Transfer','Cheque','Card'].map(m=>`<option>${m}</option>`).join('')}</select></div>
+    <div><label>Transaction Reference</label><input id="p-ref" placeholder="UTR / ref no."></div></div>
+    <label>Notes</label><input id="p-notes">`,
+    `savePayment()`);
+  payCustChanged();
+}
+function payCustChanged(){
+  const c=custById($('p-cust').value);if(!c)return;
+  $('p-total').value=c.total;$('p-already').value=custTotalPaid(c.id);
+  const invs=custInvoices(c.id);
+  $('p-inv').innerHTML='<option value="">— none —</option>'+invs.map(i=>`<option value="${i.id}">${esc(i.number)} · ${money(invTotal(i))}</option>`).join('');
+  recalcPay();
+  $('p-amt').oninput=recalcPay;
+}
+function recalcPay(){
+  const c=custById($('p-cust').value);if(!c)return;
+  const amt=Number($('p-amt').value||0);
+  $('p-rem').value=(custBalance(c)-amt).toFixed(2);
+}
+function savePayment(){
+  const c=custById($('p-cust').value);
+  const amt=Number($('p-amt').value||0);
+  if(!c)return toast('Select a customer.','bad');
+  if(amt<=0)return toast('Enter an amount received.','bad');
+  const invId=$('p-inv').value;
+  const p={id:uid(),customerId:c.id,invoiceId:invId,amount:amt,date:$('p-date').value||today(),method:$('p-method').value,reference:$('p-ref').value.trim(),notes:$('p-notes').value.trim()};
+  DB.payments.push(p);
+  DB.income.push({id:uid(),title:'Payment – '+c.name,customer:c.name,amount:amt,date:p.date,method:p.method,category:'Customer Payments',desc:'Ref: '+p.reference});
+  if(invId){const inv=DB.invoices.find(i=>i.id===invId);
+    if(inv){const tot=invTotal(inv),pd=invPaidDirect(inv);
+      if(pd>=tot-0.01)inv.status='Paid';else if(pd>0)inv.status='Partially Paid';else inv.status='Pending'}}
+  logActivity(`Payment of ${money(amt)} received from ${c.name}`);
+  saveDB();closeModal();toast(money(amt)+' recorded. Invoice, balances & dashboard updated.','ok');
+  go(PAGE==='dashboard'?'dashboard':PAGE);
+}
+function payHistory(){
+  const ps=[...DB.payments].sort((a,b)=>a.date<b.date?1:-1);
+  if(!ps.length)return emptyState('🧾','No payments recorded yet','Record a customer payment and it will appear here with export.','openPayment()','+ Add Payment');
+  return `<div class="card"><div class="card-head"><h3>Payment History</h3><div class="spacer"></div><button class="btn btn-outline btn-sm" onclick="exportCSV('payments')">⬇ Export Excel (CSV)</button></div>
+  <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Amount</th><th>Method</th><th>Reference</th><th>Notes</th></tr></thead>
+  <tbody>${ps.map(p=>`<tr><td>${fmtDate(p.date)}</td><td>${esc((custById(p.customerId)||{}).name||'—')}</td><td><b>${money(p.amount)}</b></td><td>${esc(p.method)}</td><td>${esc(p.reference||'—')}</td><td>${esc(p.notes||'—')}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+/* ---------- WhatsApp ---------- */
+function sendWhatsApp(cid){
+  const c=custById(cid);if(!c)return;
+  const rem=custBalance(c);if(rem<=0)return toast(c.name+' has no pending balance.','ok');
+  const biz=DB.business;
+  const msg=`Hello Sir/Madam,
+
+Greetings from ${biz.name||'our business'}.
+
+This is a gentle reminder regarding your pending payment of ₹${rem.toLocaleString('en-IN')} for ${c.service||'our services'}.
+
+Our records show that the payment was due on ${fmtDate(c.dueDate)}. We kindly request you to complete the payment at your convenience.
+
+If you have already made the payment, please ignore this message. For any clarification, feel free to contact us at ${biz.phone||''}.
+
+Thank you for your support and cooperation.
+
+Regards,
+${biz.name||''}`;
+  openModal('WhatsApp Payment Reminder – '+c.name,`
+    <label>Message (you can edit before sending)</label>
+    <textarea id="wa-msg" rows="12" style="font-size:13.5px">${esc(msg)}</textarea>
+    <label>Send to WhatsApp number</label><input id="wa-num" value="${esc(c.phone)}">
+    <p class="hint">WhatsApp will open with this message pre-filled. Delivery is handled by you in WhatsApp — BackOffice AI records that the reminder was prepared.</p>`,
+    `doWhatsApp('${cid}')`,'Send via WhatsApp');
+}
+function doWhatsApp(cid){
+  const c=custById(cid);
+  let num=$('wa-num').value.replace(/[^0-9]/g,'');
+  if(num.length===10)num='91'+num;
+  const msg=encodeURIComponent($('wa-msg').value);
+  DB.activity.unshift({date:today(),text:'WhatsApp reminder prepared for '+c.name+' ('+money(custBalance(cid))+')'});
+  saveDB();closeModal();
+  window.open('https://wa.me/'+num+'?text='+msg,'_blank');
+  toast('WhatsApp opened with your reminder. Follow-up result can be added in customer notes.','ok');
+}
+
+/* =========== PAGE: INVOICES =========== */
+function pInvoices(sub){
+  const active=sub||SUBS['invoices']||'All Invoices';
+  SUBS['invoices']=active;
+  let body='';
+  if(active==='Create Invoice')body=invCreateHint();
+  else if(active==='Recurring Invoices')body=invRecurring();
+  else body=invList();
+  return `<div class="page-head"><h2>🧾 Invoice Management</h2><div class="spacer"></div>
+    <button class="btn btn-primary" onclick="openInvoice()">+ Create Invoice</button></div>
+    <div class="sub-nav">${['All Invoices','Create Invoice','Recurring Invoices'].map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('invoices','${t}')">${t}</button>`).join('')}</div>${body}`;
+}
+function invCreateHint(){
+  if(!DB.customers.length)return emptyState('🧾','Create your first invoice','Add a customer first — invoices need a customer.',"openCustomer()","+ Add Customer");
+  return `<div class="card"><div class="empty"><div class="eico">🧾</div><b>Ready to create an invoice</b><p>Build a professional invoice with multiple items, discount and tax. It will automatically update the customer's outstanding balance.</p><button class="btn btn-primary btn-sm" onclick="openInvoice()">+ Create Invoice</button></div></div>`;
+}
+function openInvoice(){
+  if(!DB.customers.length)return toast('Add a customer before creating an invoice.','bad');
+  const num='INV-'+String(1000+DB.invoices.length+1);
+  openModal('Create Invoice',`
+    <div class="f2"><div><label>Invoice Number</label><input id="iv-num" value="${num}"></div>
+    <div><label>Customer</label><select id="iv-cust">${DB.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div></div>
+    <div class="f2"><div><label>Invoice Date</label><input id="iv-date" type="date" value="${today()}"></div>
+    <div><label>Due Date</label><input id="iv-due" type="date" value="${addDays(today(),14)}"></div></div>
+    <label style="margin-top:16px">Items (product / service)</label>
+    <div id="iv-items"></div>
+    <button type="button" class="btn btn-sm btn-outline" onclick="addInvRow()">+ Add Item</button>
+    <div class="f3" style="margin-top:12px"><div><label>Discount (₹)</label><input id="iv-disc" type="number" min="0" value="0"></div>
+    <div><label>Tax %</label><input id="iv-tax" type="number" min="0" value="0"></div>
+    <div><label>Recurring</label><select id="iv-rec"><option value="">Not recurring</option><option>Weekly</option><option>Monthly</option></select></div></div>
+    <label>Payment Terms / Notes</label><input id="iv-notes" value="Payment due within 14 days. Thank you for your business!">`,
+    `saveInvoice()`);
+  addInvRow();
+}
+function addInvRow(){
+  const d=document.createElement('div');d.className='item-row';
+  d.innerHTML=`<input placeholder="Item description" class="ir-name"><input type="number" min="1" value="1" class="ir-qty" placeholder="Qty"><input type="number" min="0" class="ir-price" placeholder="Price ₹"><button type="button" class="iconbtn danger" onclick="this.parentElement.remove()">🗑</button>`;
+  $('iv-items').appendChild(d);
+}
+function saveInvoice(){
+  const items=[...document.querySelectorAll('#iv-items .item-row')].map(r=>({name:r.querySelector('.ir-name').value.trim(),qty:Number(r.querySelector('.ir-qty').value||0),price:Number(r.querySelector('.ir-price').value||0)})).filter(i=>i.name);
+  if(!items.length)return toast('Add at least one item.','bad');
+  const cust=custById($('iv-cust').value);
+  const inv={id:uid(),number:$('iv-num').value.trim()||'INV-'+Date.now(),customerId:cust.id,items,date:$('iv-date').value||today(),due:$('iv-due').value,discount:Number($('iv-disc').value||0),tax:Number($('iv-tax').value||0),notes:$('iv-notes').value.trim(),recurring:$('iv-rec').value,status:'Pending'};
+  DB.invoices.push(inv);
+  cust.total=Number(cust.total||0)+invTotal(inv);
+  if(inv.due&&!cust.dueDate)cust.dueDate=inv.due;
+  logActivity('Invoice '+inv.number+' created for '+cust.name);
+  saveDB();closeModal();toast('Invoice '+inv.number+' created. Customer balance updated.','ok');
+  viewInvoice(inv.id);
+}
+function invList(){
+  const invs=[...DB.invoices].reverse();
+  if(!invs.length)return emptyState('🧾','No invoices yet','Create your first professional invoice.',"openInvoice()","+ Create Invoice");
+  return `<div class="card"><div class="card-head"><div class="tabs" style="margin:0" id="inv-tabs">
+    <button class="tab active" onclick="invFilter('All',this)">All</button>
+    <button class="tab" onclick="invFilter('Paid',this)">Paid</button>
+    <button class="tab" onclick="invFilter('Pending',this)">Pending</button>
+    <button class="tab" onclick="invFilter('Partially Paid',this)">Partially Paid</button>
+    <button class="tab" onclick="invFilter('Overdue',this)">Overdue</button></div></div>
+  <div class="tbl-wrap"><table id="inv-table"><thead><tr><th>Invoice</th><th>Customer</th><th>Date</th><th>Due</th><th>Total</th><th>Paid</th><th>Status</th><th></th></tr></thead>
+  <tbody>${invs.map(i=>{const tot=invTotal(i),pd=invPaidDirect(i),s=statusOf(tot,pd,i.due);
+    return `<tr data-st="${s[0]}" class="rowclick" onclick="viewInvoice('${i.id}')"><td><b>${esc(i.number)}</b>${i.recurring?` <span class="pill partial">${esc(i.recurring)}</span>`:''}</td><td>${esc((custById(i.customerId)||{}).name||'—')}</td><td>${fmtDate(i.date)}</td><td>${fmtDate(i.due)}</td><td>${money(tot)}</td><td style="color:var(--success)">${money(pd)}</td><td><span class="pill ${s[1]}">${s[0]}</span></td>
+    <td class="tbl-actions" onclick="event.stopPropagation()"><button class="iconbtn" title="Download PDF" onclick="printInvoice('${i.id}')">⬇</button><button class="iconbtn" title="WhatsApp" onclick="shareInvoiceWA('${i.id}')">💬</button><button class="iconbtn danger" onclick="delInvoice('${i.id}')">🗑</button></td></tr>`}).join('')}</tbody></table></div></div>`;
+}
+function invFilter(st,btn){
+  document.querySelectorAll('#inv-tabs .tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');
+  document.querySelectorAll('#inv-table tbody tr').forEach(tr=>{tr.style.display=(st==='All'||tr.dataset.st===st)?'':'none'});
+}
+function invRecurring(){
+  const rec=DB.invoices.filter(i=>i.recurring);
+  return `<div class="card"><h3>Recurring Invoices</h3>
+  ${rec.length?`<div class="tbl-wrap"><table><thead><tr><th>Invoice</th><th>Customer</th><th>Frequency</th><th>Amount</th><th>Next Due</th></tr></thead><tbody>
+  ${rec.map(i=>`<tr><td><b>${esc(i.number)}</b></td><td>${esc((custById(i.customerId)||{}).name||'')}</td><td>${esc(i.recurring)}</td><td>${money(invTotal(i))}</td><td>${fmtDate(nextRecurring(i))}</td></tr>`).join('')}</tbody></table></div>
+  <p class="hint" style="margin-top:10px">Recurring invoices repeat automatically in your forecast assumptions. Open an invoice and duplicate it when a new cycle begins.</p>`
+  :`<div class="empty"><div class="eico">🔁</div><b>No recurring invoices yet</b><p>Create an invoice and set "Recurring" to Weekly or Monthly for repeat billing.</p><button class="btn btn-primary btn-sm" onclick="openInvoice()">+ Create Invoice</button></div>`}</div>`;
+}
+function nextRecurring(i){const d=new Date(i.due);d.setDate(d.getDate()+(i.recurring==='Weekly'?7:30));return d.toISOString().slice(0,10)}
+function viewInvoice(id){
+  const i=DB.invoices.find(x=>x.id===id);if(!i)return;
+  const c=custById(i.customerId)||{},b=DB.business,tot=invTotal(i),pd=invPaidDirect(i),s=statusOf(tot,pd,i.due);
+  const sub=i.items.reduce((x,it)=>x+it.qty*it.price,0);
+  openModal('Invoice '+i.number,`
+    <div style="border:1px solid var(--line);border-radius:14px;padding:18px;background:linear-gradient(180deg,#F8FAFE,#fff)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div><b style="font-size:17px;color:var(--navy)">${esc(b.name||'My Business')}</b><br><small style="color:var(--muted)">${esc([b.address&&b.address.street,b.address&&b.address.city,b.address&&b.address.state].filter(Boolean).join(', '))}<br>${esc(b.phone||'')} ${b.email?'· '+esc(b.email):''}</small></div>
+      <div style="text-align:right"><span class="pill ${s[1]}">${s[0]}</span><br><small style="color:var(--muted)">Invoice: <b>${esc(i.number)}</b><br>Date: ${fmtDate(i.date)}<br>Due: ${fmtDate(i.due)}</small></div></div>
+    <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
+    <small style="color:var(--muted)">BILL TO</small><br><b>${esc(c.name)}</b> <span style="color:var(--muted);font-size:12.5px">${esc(c.phone||'')} ${c.address?'· '+esc(c.address):''}</span>
+    <div class="tbl-wrap" style="margin-top:12px"><table style="min-width:0"><thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>${i.items.map(it=>`<tr><td>${esc(it.name)}</td><td>${it.qty}</td><td>${money(it.price)}</td><td>${money(it.qty*it.price)}</td></tr>`).join('')}</tbody></table></div>
+    <div style="text-align:right;margin-top:12px;font-size:14px">
+      Subtotal: ${money(sub)}<br>Discount: −${money(i.discount||0)}<br>Tax (${i.tax||0}%): ${money(sub*(i.tax||0)/100)}
+      <div style="font-size:18px;font-weight:800;color:var(--navy);margin-top:6px">Total: ${money(tot)}</div>
+      <div style="font-size:13px;color:var(--muted)">Paid: ${money(pd)} · Balance: ${money(tot-pd)}</div></div>
+    <p class="hint" style="margin-top:10px">${esc(i.notes||'')}</p></div>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-outline" onclick="printInvoice('${i.id}')">⬇ PDF / Print</button>
+      <button class="btn btn-sm btn-outline" onclick="shareInvoiceWA('${i.id}')">💬 WhatsApp</button>
+      <button class="btn btn-sm btn-outline" onclick="shareInvoiceEmail('${i.id}')">✉ Email</button>
+      <button class="btn btn-sm btn-outline" onclick="duplicateInvoice('${i.id}')">🔁 Duplicate</button>
+      <button class="btn btn-sm btn-outline" onclick="closeModal();openPayment('${i.customerId}')">💵 Record Payment</button></div>`,null);
+}
+function printInvoice(id){
+  const i=DB.invoices.find(x=>x.id===id);const c=custById(i.customerId)||{},b=DB.business;
+  const sub=i.items.reduce((x,it)=>x+it.qty*it.price,0),tot=invTotal(i);
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>${esc(i.number)}</title><style>body{font-family:Arial;padding:36px;color:#13233B;max-width:720px;margin:auto}h1{color:#0B2447;font-size:22px}table{width:100%;border-collapse:collapse;margin-top:16px}th{background:#0B2447;color:#fff;padding:9px;text-align:left;font-size:12px}td{border-bottom:1px solid #e5e9f2;padding:9px;font-size:13px}.tot{font-size:17px;font-weight:bold;color:#0B2447}.hd{display:flex;justify-content:space-between}.ft{margin-top:30px;text-align:center;color:#5B6B85;font-size:11px}</style></head><body>
+  <div class="hd"><div><h1>${esc(b.name||'My Business')}</h1><small>${esc([b.address&&b.address.street,b.address&&b.address.city].filter(Boolean).join(', '))}<br>${esc(b.phone||'')}</small></div><div style="text-align:right"><h2 style="color:#1D5BD6">INVOICE</h2><small><b>${esc(i.number)}</b><br>Date: ${fmtDate(i.date)}<br>Due: ${fmtDate(i.due)}</small></div></div>
+  <p><b>Bill To:</b> ${esc(c.name)}<br>${esc(c.phone||'')} ${esc(c.address||'')}</p>
+  <table><tr><th>Item</th><th>Qty</th><th>Price</th><th>Amount</th></tr>${i.items.map(it=>`<tr><td>${esc(it.name)}</td><td>${it.qty}</td><td>₹${it.price}</td><td>₹${it.qty*it.price}</td></tr>`).join('')}</table>
+  <p style="text-align:right;margin-top:14px">Subtotal: ₹${sub.toFixed(2)}<br>Discount: ₹${(i.discount||0).toFixed(2)}<br>Tax: ₹${(sub*(i.tax||0)/100).toFixed(2)}<br><span class="tot">Total: ${money(tot)}</span></p>
+  <p><b>Payment Terms:</b> ${esc(i.notes||'')}</p>
+  <div class="ft">BackOffice AI © 2026. All Rights Reserved.</div></body></html>`);
+  w.document.close();w.print();
+}
+function shareInvoiceWA(id){
+  const i=DB.invoices.find(x=>x.id===id);const c=custById(i.customerId)||{};
+  let num=(c.phone||'').replace(/[^0-9]/g,'');if(num.length===10)num='91'+num;
+  const msg=encodeURIComponent(`Hello ${c.name||''},\n\nHere is your invoice ${i.number} from ${DB.business.name||'us'}.\nTotal amount: ₹${invTotal(i).toLocaleString('en-IN')}\nDue date: ${fmtDate(i.due)}\n\nKindly complete the payment at your convenience. Thank you!\n\n- ${DB.business.name||''}`);
+  window.open('https://wa.me/'+num+'?text='+msg,'_blank');
+  toast('WhatsApp opened with the invoice summary.','ok');
+}
+function shareInvoiceEmail(id){
+  const i=DB.invoices.find(x=>x.id===id);const c=custById(i.customerId)||{};
+  const sub=encodeURIComponent('Invoice '+i.number+' from '+(DB.business.name||''));
+  const body=encodeURIComponent(`Hello ${c.name||''},\n\nPlease find your invoice ${i.number} details:\nTotal: ₹${invTotal(i).toLocaleString('en-IN')}\nDue: ${fmtDate(i.due)}\n\nThank you.\n${DB.business.name||''}`);
+  window.open('mailto:'+(c.email||'')+'?subject='+sub+'&body='+body);
+}
+function duplicateInvoice(id){
+  const i=DB.invoices.find(x=>x.id===id);
+  const nid=uid();
+  DB.invoices.push({...i,id:nid,number:'INV-'+String(1000+DB.invoices.length+1),date:today(),due:addDays(today(),14),recurring:i.recurring});
+  const c=custById(i.customerId);if(c)c.total=Number(c.total||0)+invTotal(i);
+  saveDB();closeModal();toast('Invoice duplicated as a new invoice.','ok');viewInvoice(nid);
+}
+function delInvoice(id){
+  const i=DB.invoices.find(x=>x.id===id);
+  confirmDialog('Delete Invoice','Delete invoice '+i.number+'? The customer balance will be reduced accordingly.',()=>{
+    const c=custById(i.customerId);if(c)c.total=Number(c.total||0)-invTotal(i);
+    DB.invoices=DB.invoices.filter(x=>x.id!==id);
+    saveDB();closeModal();go('invoices','All Invoices');toast('Invoice deleted.','ok')});
+}
+
+/* =========== PAGE: INCOME & EXPENSES =========== */
+function pFinance(sub){
+  const active=sub||SUBS['finance']||'Income';
+  SUBS['finance']=active;
+  const tabs=['Income','Expenses','Expense Categories','Upcoming Bills'];
+  let body='';
+  if(active==='Income')body=incList();
+  else if(active==='Expenses')body=expList();
+  else if(active==='Expense Categories')body=expCats();
+  else body=billList();
+  return `<div class="page-head"><h2>💰 Income & Expenses</h2><div class="spacer"></div>
+    <button class="btn btn-outline" onclick="openIncome()">+ Add Income</button>
+    <button class="btn btn-primary" onclick="openExpense()">+ Add Expense</button></div>
+    <div class="sub-nav">${tabs.map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('finance','${t}')">${t}</button>`).join('')}</div>${body}`;
+}
+function incList(){
+  const rows=[...DB.income].sort((a,b)=>a.date<b.date?1:-1);
+  if(!rows.length)return emptyState('💵','No income records yet','Add income manually, or record a customer payment and it appears here automatically.',"openIncome()","+ Add Income");
+  const tot=rows.reduce((s,r)=>s+Number(r.amount||0),0);
+  return `<div class="card"><div class="card-head"><h3>Income Records</h3><span class="pill paid">Total: ${money(tot)}</span><div class="spacer"></div><button class="btn btn-outline btn-sm" onclick="exportCSV('income')">⬇ Excel</button></div>
+  <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Title</th><th>Customer</th><th>Category</th><th>Method</th><th>Amount</th><th></th></tr></thead>
+  <tbody>${rows.map(r=>`<tr><td>${fmtDate(r.date)}</td><td><b>${esc(r.title)}</b></td><td>${esc(r.customer||'—')}</td><td>${esc(r.category||'—')}</td><td>${esc(r.method||'')}</td><td style="color:var(--success)"><b>+${money(r.amount)}</b></td>
+  <td class="tbl-actions"><button class="iconbtn" onclick="openIncome('${r.id}')">✏️</button><button class="iconbtn danger" onclick="delIncome('${r.id}')">🗑</button></td></tr>`).join('')}</tbody></table></div></div>`;
+}
+function openIncome(id){
+  const r=id?DB.income.find(x=>x.id===id):null;
+  openModal(r?'Edit Income':'Add Income',`
+    <label>Income Title *</label><input id="in-title" value="${esc(r?r.title:'')}" required>
+    <div class="f3"><div><label>Customer</label><select id="in-cust"><option value="">— none —</option>${DB.customers.map(c=>`<option ${r&&r.customer===c.name?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
+    <div><label>Amount (₹) *</label><input id="in-amt" type="number" min="1" value="${r?r.amount:''}" required></div>
+    <div><label>Date</label><input id="in-date" type="date" value="${r?r.date:today()}"></div></div>
+    <div class="f2"><div><label>Payment Method</label><select id="in-method">${['Cash','UPI','Bank Transfer','Cheque','Card'].map(m=>`<option ${r&&r.method===m?'selected':''}>${m}</option>`).join('')}</select></div>
+    <div><label>Category</label><input id="in-cat" value="${esc(r?r.category||'':'')}" placeholder="e.g. Tuition Fees"></div></div>
+    <label>Description</label><input id="in-desc" value="${esc(r?r.desc||'':'')}">`,
+    `saveIncome(${r?`'${r.id}'`:'null'})`);
+}
+function saveIncome(id){
+  const title=$('in-title').value.trim(),amt=Number($('in-amt').value||0);
+  if(!title||amt<=0)return toast('Enter a title and a valid amount.','bad');
+  const d={title,amount:amt,customer:$('in-cust').value,date:$('in-date').value||today(),method:$('in-method').value,category:$('in-cat').value.trim(),desc:$('in-desc').value.trim()};
+  if(id)Object.assign(DB.income.find(x=>x.id===id),d);else DB.income.push({id:uid(),...d});
+  saveDB();closeModal();toast('Income recorded. Dashboard updated.','ok');go('finance','Income');
+}
+function delIncome(id){confirmDialog('Delete Income','Delete this income record?',()=>{DB.income=DB.income.filter(x=>x.id!==id);saveDB();closeModal();go('finance','Income');toast('Income record deleted.','ok')})}
+function expList(){
+  const rows=[...DB.expenses].sort((a,b)=>a.date<b.date?1:-1);
+  if(!rows.length)return emptyState('💸','No expenses recorded yet','Track rent, internet, salaries, transport and more.',"openExpense()","+ Add Expense");
+  const tot=rows.reduce((s,r)=>s+Number(r.amount||0),0);
+  return `<div class="card"><div class="card-head"><h3>Expense Records</h3><span class="pill overdue">Total: ${money(tot)}</span><div class="spacer"></div><button class="btn btn-outline btn-sm" onclick="exportCSV('expenses')">⬇ Excel</button></div>
+  <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Title</th><th>Category</th><th>Vendor</th><th>Method</th><th>Amount</th><th></th></tr></thead>
+  <tbody>${rows.map(r=>`<tr><td>${fmtDate(r.date)}</td><td><b>${esc(r.title)}</b>${r.notes?`<br><small style="color:var(--muted)">${esc(r.notes)}</small>`:''}</td><td>${esc(r.category||'—')}</td><td>${esc(r.vendor||'—')}</td><td>${esc(r.method||'')}</td><td style="color:var(--danger)"><b>−${money(r.amount)}</b></td>
+  <td class="tbl-actions"><button class="iconbtn" onclick="openExpense('${r.id}')">✏️</button><button class="iconbtn danger" onclick="delExpense('${r.id}')">🗑</button></td></tr>`).join('')}</tbody></table></div></div>`;
+}
+function openExpense(id){
+  const r=id?DB.expenses.find(x=>x.id===id):null;
+  const cats=['Rent','Electricity','Internet','Salaries','Transport','Equipment','Supplies','Other'];
+  openModal(r?'Edit Expense':'Add Expense',`
+    <label>Expense Title *</label><input id="ex-title" value="${esc(r?r.title:'')}" required>
+    <div class="f3"><div><label>Amount (₹) *</label><input id="ex-amt" type="number" min="1" value="${r?r.amount:''}" required></div>
+    <div><label>Date</label><input id="ex-date" type="date" value="${r?r.date:today()}"></div>
+    <div><label>Category</label><select id="ex-cat">${cats.map(c=>`<option ${r&&r.category===c?'selected':''}>${c}</option>`).join('')}</select></div></div>
+    <div class="f2"><div><label>Payment Method</label><select id="ex-method">${['Cash','UPI','Bank Transfer','Cheque','Card'].map(m=>`<option ${r&&r.method===m?'selected':''}>${m}</option>`).join('')}</select></div>
+    <div><label>Vendor</label><input id="ex-vendor" value="${esc(r?r.vendor||'':'')}"></div></div>
+    <label>Notes</label><input id="ex-notes" value="${esc(r?r.notes||'':'')}">`,
+    `saveExpense(${r?`'${r.id}'`:'null'})`);
+}
+function saveExpense(id){
+  const title=$('ex-title').value.trim(),amt=Number($('ex-amt').value||0);
+  if(!title||amt<=0)return toast('Enter a title and a valid amount.','bad');
+  const d={title,amount:amt,date:$('ex-date').value||today(),category:$('ex-cat').value,method:$('ex-method').value,vendor:$('ex-vendor').value.trim(),notes:$('ex-notes').value.trim()};
+  if(id)Object.assign(DB.expenses.find(x=>x.id===id),d);else DB.expenses.push({id:uid(),...d});
+  saveDB();closeModal();logActivity('Expense "'+title+'" of '+money(amt)+' recorded');toast('Expense recorded. Financial summaries updated.','ok');go('finance','Expenses');
+}
+function delExpense(id){confirmDialog('Delete Expense','Delete this expense record?',()=>{DB.expenses=DB.expenses.filter(x=>x.id!==id);saveDB();closeModal();go('finance','Expenses');toast('Expense deleted.','ok')})}
+function expCats(){
+  const cats={};
+  DB.expenses.forEach(e=>{cats[e.category||'Other']=(cats[e.category||'Other']||0)+Number(e.amount||0)});
+  const list=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  if(!list.length)return emptyState('🗂','No expense categories yet','Categories appear automatically as you record expenses.',"openExpense()","+ Add Expense");
+  const tot=list.reduce((s,x)=>s+x[1],0);
+  return `<div class="card" style="max-width:640px"><h3>Spending by Category</h3>
+  ${list.map(([c,v])=>`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:600"><span>${esc(c)}</span><span>${money(v)} · ${Math.round(v/tot*100)}%</span></div>
+  <div style="height:9px;background:var(--bg);border-radius:99px;margin-top:5px"><div style="height:100%;width:${Math.max(3,v/tot*100)}%;background:${c==='Rent'?'#E02424':c==='Salaries'?'#7C5CFC':'#1D5BD6'};border-radius:99px"></div></div></div>`).join('')}</div>`;
+}
+function billList(){
+  const bs=[...DB.bills].sort((a,b)=>a.due<b.due?-1:1);
+  const soon=bs.filter(b=>{const d=daysUntil(b.due);return b.status!=='Paid'&&d>=0&&d<=5});
+  return `${soon.length?`<div style="margin-bottom:14px">${soon.map(b=>`<div class="alert amber"><span>⏰</span><span><b>${esc(b.name)}</b> of ${money(b.amount)} is due ${daysUntil(b.due)===0?'today':'in '+daysUntil(b.due)+' day(s)'}.</span></div>`).join('')}</div>`:''}
+  <div class="card"><div class="card-head"><h3>Upcoming Bills</h3><div class="spacer"></div><button class="btn btn-primary btn-sm" onclick="openBill()">+ Add Bill</button></div>
+  ${bs.length?`<div class="tbl-wrap"><table><thead><tr><th>Bill</th><th>Amount</th><th>Due Date</th><th>Recurrence</th><th>Status</th><th></th></tr></thead>
+  <tbody>${bs.map(b=>`<tr><td><b>${esc(b.name)}</b></td><td>${money(b.amount)}</td><td>${fmtDate(b.due)}</td><td>${esc(b.recurrence||'One-time')}</td><td><span class="pill ${b.status==='Paid'?'paid':'pending'}">${esc(b.status||'Pending')}</span></td>
+  <td class="tbl-actions">${b.status!=='Paid'?`<button class="btn btn-sm btn-outline" onclick="markBillPaid('${b.id}')">Mark Paid</button>`:''}<button class="iconbtn" onclick="openBill('${b.id}')">✏️</button><button class="iconbtn danger" onclick="delBill('${b.id}')">🗑</button></td></tr>`).join('')}</tbody></table></div>`
+  :emptyState('📅','No upcoming bills yet','Add recurring bills like rent and internet — they feed your cash-flow forecast.','openBill()','+ Add Bill')}</div>`;
+}
+function openBill(id){
+  const b=id?DB.bills.find(x=>x.id===id):null;
+  openModal(b?'Edit Bill':'Add Upcoming Bill',`
+    <label>Bill Name *</label><input id="bl-name" value="${esc(b?b.name:'')}" required>
+    <div class="f3"><div><label>Amount (₹) *</label><input id="bl-amt" type="number" min="1" value="${b?b.amount:''}" required></div>
+    <div><label>Due Date</label><input id="bl-due" type="date" value="${b?b.due:addDays(today(),7)}"></div>
+    <div><label>Recurrence</label><select id="bl-rec">${['One-time','Weekly','Monthly','Yearly'].map(r=>`<option ${b&&b.recurrence===r?'selected':''}>${r}</option>`).join('')}</select></div></div>`,
+    `saveBill(${b?`'${b.id}'`:'null'})`);
+}
+function saveBill(id){
+  const name=$('bl-name').value.trim(),amt=Number($('bl-amt').value||0);
+  if(!name||amt<=0)return toast('Enter a bill name and amount.','bad');
+  const d={name,amount:amt,due:$('bl-due').value||addDays(today(),7),recurrence:$('bl-rec').value,status:'Pending'};
+  if(id)Object.assign(DB.bills.find(x=>x.id===id),d);else DB.bills.push({id:uid(),...d});
+  saveDB();closeModal();toast('Bill saved. It now feeds your cash-flow forecast.','ok');go('finance','Upcoming Bills');
+}
+function markBillPaid(id){
+  const b=DB.bills.find(x=>x.id===id);
+  b.status='Paid';
+  DB.expenses.push({id:uid(),title:b.name,amount:b.amount,date:today(),category:'Bills',method:'Bank Transfer',vendor:'',notes:'Scheduled bill payment'});
+  logActivity('Bill "'+b.name+'" paid — expense recorded');
+  saveDB();go('finance','Upcoming Bills');toast('Bill marked paid and recorded as an expense.','ok');
+}
+function delBill(id){confirmDialog('Delete Bill','Delete this upcoming bill?',()=>{DB.bills=DB.bills.filter(x=>x.id!==id);saveDB();closeModal();go('finance','Upcoming Bills');toast('Bill deleted.','ok')})}
+
+/* =========== PAGE: CASH FLOW =========== */
+function forecast(days,opts){
+  opts=opts||{};
+  const t=finTotals();
+  let cash=t.cash;
+  const end=addDays(today(),days);
+  let incoming=0;
+  DB.customers.forEach(c=>{
+    const bal=custBalance(c);if(bal<=0)return;
+    const s=custStatus(c);
+    if(s==='overdue'){if(opts.includeOverdue)incoming+=bal;return}
+    if(opts.excludePending)return;
+    incoming+=bal;
+  });
+  const expList=DB.expenses.slice();
+  DB.bills.filter(b=>b.status!=='Paid').forEach(b=>{
+    const d=daysUntil(b.due);if(d==null||d<0||d>days)return;
+    expList.push({amount:b.amount});
+  });
+  let outflow=expList.reduce((s,e)=>{const dd=daysUntil(e.date);return s+((dd==null||dd<0||dd>days)?0:Number(e.amount||0))},0);
+  if(opts.expenseUp)outflow*=1.2;
+  if(opts.newMonthly)outflow+=opts.newMonthly*Math.max(1,Math.round(days/30));
+  const horizonIncome=DB.income.filter(i=>{const dd=daysUntil(i.date);return dd!=null&&dd>=0&&dd<=days}).reduce((s,i)=>s+Number(i.amount||0),0);
+  const horizonOut=DB.expenses.filter(e=>{const dd=daysUntil(e.date);return dd!=null&&dd>=0&&dd<=days}).reduce((s,e)=>s+Number(e.amount||0),0);
+  return {base:cash,incoming,outflow:outflow-horizonOut,projected:cash+incoming-outflow,overdue:DB.customers.filter(c=>custStatus(c)==='overdue').reduce((s,c)=>s+custBalance(c),0)};
+}
+function pCashflow(sub){
+  const active=sub||SUBS['cashflow']||'Cash Position';
+  SUBS['cashflow']=active;
+  let body='';
+  if(active==='Cash Position')body=cfPosition();
+  else if(active==='What-If Scenarios')body=cfWhatIf();
+  else if(active==='Cash Alerts')body=cfAlerts();
+  else body=cfForecast();
+  return `<div class="page-head"><h2>📈 Cash Flow Management</h2></div>
+  <div class="sub-nav">${['Cash Position','30 / 60 / 90-Day Forecast','What-If Scenarios','Cash Alerts'].map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('cashflow','${t}')">${t}</button>`).join('')}</div>${body}`;
+}
+function cfPosition(){
+  const t=finTotals(),f=forecast(30);
+  return `<div class="grid g4" style="margin-bottom:16px">
+    <div class="card stat"><div class="lbl">Current Cash Balance</div><div class="val">${money(t.cash)}</div></div>
+    <div class="card stat"><div class="lbl">Expected Incoming</div><div class="val pos">+${money(f.incoming)}</div></div>
+    <div class="card stat"><div class="lbl">Upcoming Expenses</div><div class="val neg">−${money(f.outflow)}</div></div>
+    <div class="card stat"><div class="lbl">Expected in 30 Days</div><div class="val">${money(f.projected)}</div></div></div>
+  <div class="card ai-card"><h3>How this is calculated</h3><p style="font-size:13.5px">Expected incoming counts unpaid customer balances that are <b>not yet overdue</b> — overdue money is shown separately as at-risk, not guaranteed. Upcoming expenses come from your recorded expenses and bills inside the next 30 days.</p></div>`;
+}
+function cfForecast(){
+  const f30=forecast(30),f60=forecast(60),f90=forecast(90);
+  const pts=[{d:0,v:f30.base},{d:30,v:f30.projected},{d:60,v:f60.projected},{d:90,v:f90.projected}];
+  const max=Math.max(...pts.map(p=>p.v),1),min=Math.min(...pts.map(p=>p.v),0);
+  const y=v=>100-(v-min)/(max-min||1)*90-5;
+  return `<div class="grid g3" style="margin-bottom:16px">
+    ${[f30,f60,f90].map((f,i)=>`<div class="card stat"><div class="lbl">${[30,60,90][i]}-Day Forecast</div><div class="val ${f.projected<f.base?'neg':'pos'}">${money(f.projected)}</div>
+    <small style="color:var(--muted)">+${money(f.incoming)} expected in · −${money(f.outflow)} expected out</small></div>`).join('')}</div>
+  <div class="card"><h3>Cash Position Trend (90 Days)</h3>
+    <div style="position:relative;height:180px;border-left:2px solid var(--line);border-bottom:2px solid var(--line);margin:14px 10px 0">
+    <svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none" viewBox="0 0 100 100">
+      <polyline fill="none" stroke="#1D5BD6" stroke-width="1.5" points="${pts.map(p=>(p.d/90*98+1)+','+y(p.v)).join(' ')}"/>
+      ${pts.map(p=>`<circle cx="${p.d/90*98+1}" cy="${y(p.v)}" r="1.6" fill="#0B2447"/>`).join('')}
+    </svg>
+    <div style="position:absolute;right:0;top:-4px;font-size:11px;color:var(--muted)">${money(max)}</div></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin:8px 10px 0"><span>Today</span><span>+30d</span><span>+60d</span><span>+90d</span></div>
+    <p class="hint" style="margin-top:14px">Assumptions: pending (not overdue) customer balances are expected to be collected; overdue balances are excluded until paid; scheduled bills and recorded expenses within each window are subtracted. Adjust scenarios in What-If Scenarios.</p></div>`;
+}
+let WI={late:false,up:false,early:false,monthly:0};
+function cfWhatIf(){
+  const base=forecast(30),sLate=forecast(30,{excludePending:true}),sUp=forecast(30,{expenseUp:true}),sEarly=forecast(30,{includeOverdue:true}),sNew=forecast(30,{newMonthly:WI.monthly});
+  const row=(name,desc,val,vs)=>`<div class="card"><h3>${name}</h3><p style="font-size:13px;color:var(--muted)">${desc}</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span style="font-size:12px;color:var(--muted)">30-day expected balance</span><b style="font-size:19px;color:${val<vs?'var(--danger)':'var(--success)'}">${money(val)}</b></div>
+    <small style="color:${val<vs?'var(--danger)':'var(--success)'};font-weight:600">${val>=vs?'+':''}${money(val-vs)} vs normal forecast</small></div>`;
+  return `<div class="grid g2">
+  ${row('⚠️ What if customers pay late?','All pending (not overdue) collections are delayed beyond 30 days.',sLate.projected,base.projected)}
+  ${row('⚠️ What if expenses increase 20%?','Every expected expense in the next 30 days grows by 20%.',sUp.projected,base.projected)}
+  ${row('✅ What if a customer pays early?','Overdue balances are also collected within 30 days.',sEarly.projected,base.projected)}
+  ${row('🆕 What if a new monthly expense is added?','Adds a recurring monthly outflow starting this month.',sNew.projected,base.projected)}
+  </div>
+  <div class="card" style="margin-top:16px;max-width:480px"><h3>Test a new monthly expense</h3>
+  <div style="display:flex;gap:10px;align-items:flex-end"><div style="flex:1"><label>Monthly Amount (₹)</label><input id="wi-amt" type="number" value="${WI.monthly||''}" placeholder="e.g. 3000"></div>
+  <button class="btn btn-primary btn-sm" onclick="WI.monthly=Number($('wi-amt').value||0);go('cashflow','What-If Scenarios')">Apply</button></div></div>`;
+}
+function cfAlerts(){
+  const t=finTotals(),f30=forecast(30,{excludePending:true}),f90=forecast(90);
+  const alerts=[];
+  if(f30.projected<0)alerts.push(['red','🚨 Possible cash shortage: even with pending collections delayed, expected outflows may exceed your cash in the next 30 days. Collect overdue payments first.']);
+  if(t.overdue>0)alerts.push(['red','⏰ '+money(t.overdue)+' is overdue from customers. Delayed customer payments directly reduce your future cash position.']);
+  const soonBills=DB.bills.filter(b=>{const d=daysUntil(b.due);return b.status!=='Paid'&&d!=null&&d>=0&&d<=7});
+  soonBills.forEach(b=>alerts.push(['amber','📅 Upcoming bill: '+esc(b.name)+' — '+money(b.amount)+' due '+fmtDate(b.due)+'.']));
+  if(f90.projected<0)alerts.push(['amber','📉 Your 90-day forecast turns negative. Consider reducing expenses or accelerating collections.']);
+  if(!alerts.length)alerts.push(['blue','✅ No cash risks detected. Your forecast looks stable for the next 90 days.']);
+  return `<div class="card" style="max-width:720px"><h3>Cash Alerts</h3>${alerts.map(a=>`<div class="alert ${a[0]}"><span></span><span>${a[1]}</span></div>`).join('')}
+  <p class="hint" style="margin-top:10px">Alerts are generated from your stored transactions, due dates and conservative assumptions — not guesses.</p></div>`;
+}
+
+/* =========== PAGE: AI ASSISTANT =========== */
+let CHAT=[];
+function pAI(sub){
+  return `<div class="page-head"><h2>🤖 AI Business Assistant</h2></div>
+  <div class="grid g3">
+  <div class="card" style="grid-column:span 2;display:flex;flex-direction:column;min-height:460px">
+    <div class="chat" id="chat" style="flex:1">${CHAT.length?CHAT.map(m=>`<div class="msg ${m.who}">${m.text}</div>`).join(''):'<div class="msg bot">Hello '+esc((DB.profile.name||'').split(' ')[0])+'! 👋 I am your BackOffice AI assistant. I answer using your <b>real business records</b> — I never invent figures. Try a question below.</div>'}</div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <input id="ai-q" placeholder="Ask e.g. Who owes me money?" onkeydown="if(event.key==='Enter')askAI()">
+      <button class="btn btn-primary" onclick="askAI()">Ask</button></div></div>
+  <div class="card"><h3>Quick Questions</h3>
+    ${['Who owes me money?','How much did I receive this month?','What are my total expenses?','Which customers are overdue?','Cash after 30 days?','Which bills are coming soon?','What should I do today?','Am I spending more than I earn?','Summarize this month'].map(q=>`<button class="btn btn-sm btn-outline btn-block" style="margin-bottom:7px;justify-content:flex-start" onclick="quickAI('${q}')">${q}</button>`).join('')}</div></div>`;
+}
+function quickAI(q){$('ai-q').value=q;askAI()}
+function pushMsg(who,text){CHAT.push({who,text});const el=$('chat');if(el){el.innerHTML=CHAT.map(m=>`<div class="msg ${m.who}">${m.text}</div>`).join('');el.scrollTop=el.scrollHeight}}
+function askAI(){
+  const q=$('ai-q').value.trim();if(!q)return;
+  pushMsg('user',esc(q));$('ai-q').value='';
+  setTimeout(()=>pushMsg('bot',aiAnswer(q)),350);
+}
+function aiAnswer(qRaw){
+  const q=qRaw.toLowerCase(),t=finTotals(),now=new Date();
+  const monKey=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  const monInc=DB.income.filter(i=>(i.date||'').startsWith(monKey)).reduce((s,i)=>s+Number(i.amount||0),0);
+  const monExp=DB.expenses.filter(e=>(e.date||'').startsWith(monKey)).reduce((s,e)=>s+Number(e.amount||0),0);
+  const overdue=DB.customers.filter(c=>custStatus(c)==='overdue');
+  const owing=DB.customers.filter(c=>custBalance(c)>0).sort((a,b)=>custBalance(b)-custBalance(a));
+  const soonBills=DB.bills.filter(b=>{const d=daysUntil(b.due);return b.status!=='Paid'&&d!=null&&d>=0&&d<=14}).sort((a,b)=>a.due<b.due?-1:1);
+  const lines=a=>a.filter(Boolean).join('\n\n');
+  if(/owe|outstanding|pending|due from|balance/.test(q)&&/owe|outstanding|balance/.test(q)||/who owes/.test(q)){
+    return lines([owing.length?'<b>Customers who owe you money:</b>\n'+owing.map(c=>'• '+esc(c.name)+' — <b>'+money(custBalance(c))+'</b>'+(custStatus(c)==='overdue'?' ⚠️ overdue':'')+' ('+esc(c.service||'')+')').join('\n'):'Good news — no customer currently owes you money. 🎉',
+      t.overdue>0?'⚠️ Of this, <b>'+money(t.overdue)+'</b> is overdue. Start with: '+overdue.map(c=>c.name).join(', ')+'. Open Payments & Banking → Reminders to send a polite WhatsApp nudge.':null]);
+  }
+  if(/received|income this month|this month.*received|how much.*month/.test(q)){
+    return lines(['This month you received <b>'+money(monInc)+'</b> and spent <b>'+money(monExp)+'</b> — a net of <b>'+money(monInc-monExp)+'</b>.',
+      'All-time: received '+money(t.received)+' from customers, total income '+money(t.income)+'.']);
+  }
+  if(/expense|spend|spending/.test(q)&&!/earn|more than/.test(q)){
+    const cats={};DB.expenses.forEach(e=>cats[e.category||'Other']=(cats[e.category||'Other']||0)+Number(e.amount||0));
+    const top=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    return lines(['Your total recorded expenses are <b>'+money(t.expenses)+'</b>.'+((monExp)?' This month: <b>'+money(monExp)+'</b>.':''),
+      top.length?'Biggest categories: '+top.map(x=>'• '+x[0]+' — '+money(x[1])).join('\n'):'']);
+  }
+  if(/more than i earn|profitable|profit|losing/.test(q)){
+    const net=t.income-t.expenses;
+    return net>=0?'You are in a healthy position: income <b>'+money(t.income)+'</b> vs expenses <b>'+money(t.expenses)+'</b> — a positive difference of <b>'+money(net)+'</b>. ✓'
+      :'⚠️ Yes — you are currently spending more than you earn: expenses '+money(t.expenses)+' exceed income '+money(t.income)+' by <b>'+money(-net)+'</b>. Review the biggest expense categories and follow up on '+money(t.outstanding)+' of outstanding customer payments.';
+  }
+  if(/overdue|late/.test(q)){
+    return overdue.length?'<b>'+overdue.length+' customer(s) have overdue payments:</b>\n'+overdue.map(c=>'• '+esc(c.name)+' — <b>'+money(custBalance(c))+'</b>, due '+fmtDate(c.dueDate)).join('\n')+'\n\nSend a respectful reminder from Payments & Banking → Reminders — the message is pre-written for you.':'No overdue payments right now. ✓';
+  }
+  if(/cash|forecast|30|60|90/.test(q)){
+    const m30=q.match(/(60|90)/);
+    const f=m30?forecast(Number(m30[1])):forecast(30);
+    return lines(['Based on your records and conservative assumptions (pending — not overdue — balances expected, overdue excluded):',
+      'Expected cash after '+ (m30?m30[1]:30) +' days: <b>'+money(f.projected)+'</b>.',
+      'That is +'+money(f.incoming)+' expected collections minus '+money(f.outflow)+' expected expenses. See Cash Flow → What-If Scenarios to test delays or extra spending.']);
+  }
+  if(/bill|upcoming/.test(q)){
+    return soonBills.length?'<b>Bills due in the next 14 days:</b>\n'+soonBills.map(b=>'• '+esc(b.name)+' — '+money(b.amount)+' due '+fmtDate(b.due)).join('\n')+'\n\nKeep this cash ready — these bills are already counted in your forecast.':'No bills due in the next 14 days. ✓';
+  }
+  if(/today|what should i do|next|advice|recommend|contact first|priority/.test(q)){
+    const acts=[];
+    if(overdue.length)acts.push('1️⃣ Contact '+overdue.map(c=>c.name.split(' ')[0]).slice(0,2).join(' and ')+' — '+money(t.overdue)+' is overdue. Send the prepared WhatsApp reminders.');
+    if(soonBills.length)acts.push((acts.length+1)+'️⃣ Keep '+money(soonBills.reduce((s,b)=>s+b.amount,0))+' ready for bills due within 14 days ('+soonBills.map(b=>b.name).join(', ')+').');
+    if(owing.length&&!overdue.length)acts.push('1️⃣ Follow up politely with '+owing[0].name+' — the largest pending balance is '+money(custBalance(owing[0]))+'.');
+    if(t.expenses>t.income&&t.income>0)acts.push((acts.length+1)+'️⃣ You are spending more than you earn — review your expense categories.');
+    acts.push((acts.length+1)+'️⃣ Check your 30–90 day cash-flow forecast in the Cash Flow section before making new commitments.');
+    return '<b>Here is what I recommend today:</b>\n\n'+acts.join('\n\n');
+  }
+  if(/summar|week|month.*summary|performance/.test(q)){
+    const f=forecast(30);
+    return lines(['<b>Your business this month:</b>',
+      '• Received: '+money(monInc)+'\n• Spent: '+money(monExp)+'\n• Net: '+money(monInc-monExp),
+      '• Outstanding from customers: '+money(t.outstanding)+(t.overdue?' (including '+money(t.overdue)+' overdue)':''),
+      '• Expected cash in 30 days: '+money(f.projected),
+      (t.overdue?'Your top priority is collecting the '+money(t.overdue)+' overdue balance.':'Collections are on track — keep it up.')]);
+  }
+  if(/remind|whatsapp|message/.test(q)){
+    return owing.length?'I can prepare a polite WhatsApp reminder for you. Open <b>Payments & Banking → Reminders</b>, or click the 💬 icon next to any customer. The message automatically includes the customer name, pending amount, due date and your business contact details — and you can edit it before sending.':'No pending payments, so no reminders are needed right now. ✓';
+  }
+  if(/unusual|pattern|unusal|strange/.test(q)){
+    const avgExp=DB.expenses.length?DB.expenses.reduce((s,e)=>s+Number(e.amount||0),0)/DB.expenses.length:0;
+    const big=DB.expenses.filter(e=>Number(e.amount)>avgExp*2);
+    return big.length?'I noticed unusually large expenses: '+big.map(e=>'• '+esc(e.title)+' — '+money(e.amount)+' ('+fmtDate(e.date)+', about '+Math.round(Number(e.amount)/avgExp)+'× your average expense)').join('\n')+'\n\nIf these repeat monthly, add them as upcoming bills so your forecast stays accurate.':'I do not see unusual spending patterns. Your expenses look consistent with your typical levels.';
+  }
+  return lines(['I can answer questions using your real business records. Try:',
+    '• "Who owes me money?"\n• "How much did I receive this month?"\n• "Which customers are overdue?"\n• "How much cash after 30 days?"\n• "What should I do today?"',
+    'You can also open the Cash Flow section for forecasts and the Reports section for detailed numbers.']);
+}
+
+/* =========== PAGE: REPORTS =========== */
+function pReports(sub){
+  const active=sub||SUBS['reports']||'Financial Reports';
+  SUBS['reports']=active;
+  let body='';
+  if(active==='Financial Reports')body=repFinancial();
+  else if(active==='Excel Export')body=repExport();
+  else if(active==='Excel Import')body=repImport();
+  else if(active==='Document Library')body=repDocs();
+  else body=repCustom();
+  return `<div class="page-head"><h2>📑 Reports & Excel Management</h2></div>
+  <div class="sub-nav">${['Financial Reports','Excel Export','Excel Import','Document Library','Custom Reports'].map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('reports','${t}')">${t}</button>`).join('')}</div>${body}`;
+}
+let REP=null;
+function repFinancial(){
+  return `<div class="card"><h3>Generate Financial Reports</h3>
+  <p class="hint" style="margin-bottom:12px">All reports are calculated from your saved records.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    ${['Daily','Weekly','Monthly','Yearly'].map(t=>`<button class="btn btn-outline btn-sm" onclick="genReport('${t}')">${t} Summary</button>`).join('')}
+    ${['Income','Expenses','Outstanding','Customers','Cash Flow'].map(t=>`<button class="btn btn-outline btn-sm" onclick="genReport('${t}')">${t} Report</button>`).join('')}
+  </div>
+  <div id="rep-out" style="margin-top:16px">${REP?repHTML(REP):'<p class="hint">Choose a report type above to generate it.</p>'}</div></div>`;
+}
+function genReport(type){
+  const inRange=(d,from,to)=>d&&d>=from&&d<=to;
+  const now=new Date();
+  let rows=[],title=type+' Report',head=[],note='';
+  if(['Daily','Weekly','Monthly','Yearly'].includes(type)){
+    let from=today(),to=today();
+    if(type==='Daily')from=to=today();
+    if(type==='Weekly'){from=addDays(today(),-6)}
+    if(type==='Monthly'){from=monKey()+'-01';to=today()}
+    if(type==='Yearly'){from=now.getFullYear()+'-01-01';to=today()}
+    const inc=DB.income.filter(i=>inRange(i.date,from,to)),exp=DB.expenses.filter(e=>inRange(e.date,from,to));
+    const ti=inc.reduce((s,i)=>s+Number(i.amount||0),0),te=exp.reduce((s,e)=>s+Number(e.amount||0),0);
+    title=type+' Summary ('+fmtDate(from)+' – '+fmtDate(to)+')';
+    head=['Metric','Amount'];rows=[['Income',money(ti)],['Expenses',money(te)],['Net',money(ti-te)],['Income entries',inc.length],['Expense entries',exp.length]];
+    note='Calculated from saved records in this period.';
+  } else if(type==='Income'){
+    head=['Date','Title','Customer','Category','Method','Amount'];
+    rows=DB.income.sort((a,b)=>a.date<b.date?1:-1).map(i=>[fmtDate(i.date),i.title,i.customer||'—',i.category||'—',i.method||'',money(i.amount)]);
+  } else if(type==='Expenses'){
+    head=['Date','Title','Category','Vendor','Method','Amount'];
+    rows=DB.expenses.sort((a,b)=>a.date<b.date?1:-1).map(e=>[fmtDate(e.date),e.title,e.category||'—',e.vendor||'—',e.method||'',money(e.amount)]);
+  } else if(type==='Outstanding'){
+    head=['Customer','Mobile','Service','Total','Paid','Balance','Status'];
+    rows=DB.customers.map(c=>{const pd=custTotalPaid(c.id);return[c.name,c.phone,c.service||'—',money(c.total),money(pd),money(custBalance(c)),statusOf(c.total,pd,c.dueDate)[0]]});
+  } else if(type==='Customers'){
+    head=['Customer','Mobile','Email','Type','Service','Total','Balance','Status'];
+    rows=DB.customers.map(c=>[c.name,c.phone,c.email||'—',c.type||'—',c.service||'—',money(c.total),money(custBalance(c)),custStatus(c)]);
+  } else if(type==='Cash Flow'){
+    const f30=forecast(30),f60=forecast(60),f90=forecast(90);
+    head=['Horizon','Expected In','Expected Out','Projected Balance'];
+    rows=[['Current',money(finTotals().cash),'',''],['30 days',money(f30.incoming),money(f30.outflow),money(f30.projected)],['60 days',money(f60.incoming),money(f60.outflow),money(f60.projected)],['90 days',money(f90.incoming),money(f90.outflow),money(f90.projected)]];
+    note='Assumes pending (not overdue) balances are collected; overdue is excluded.';
+  }
+  REP={title,head,rows,note};
+  go('reports','Financial Reports');
+}
+function repHTML(r){
+  return `<div class="card-head"><h3>${esc(r.title)}</h3><div class="spacer"></div>
+    <button class="btn btn-outline btn-sm" onclick="exportCSV('report')">⬇ Excel (CSV)</button>
+    <button class="btn btn-outline btn-sm" onclick="printReport()">🖨 PDF / Print</button></div>
+    <div class="tbl-wrap"><table><thead><tr>${r.head.map(h=>'<th>'+esc(h)+'</th>').join('')}</tr></thead>
+    <tbody>${r.rows.length?r.rows.map(row=>'<tr>'+row.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+r.head.length+'">No records in this period.</td></tr>'}</tbody></table></div>
+    ${r.note?'<p class="hint" style="margin-top:8px">'+esc(r.note)+'</p>':''}`;
+}
+function printReport(){
+  if(!REP)return;
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>${esc(REP.title)}</title><style>body{font-family:Arial;padding:36px;color:#13233B}h1{color:#0B2447;font-size:20px}table{width:100%;border-collapse:collapse;margin-top:16px}th{background:#0B2447;color:#fff;padding:8px;text-align:left;font-size:12px}td{border-bottom:1px solid #e5e9f2;padding:8px;font-size:13px}.hd{display:flex;justify-content:space-between;color:#5B6B85;font-size:12px}.ft{margin-top:26px;text-align:center;color:#5B6B85;font-size:11px}</style></head><body>
+  <h1>${esc(DB.business.name||'My Business')} — ${esc(REP.title)}</h1><div class="hd"><span>Generated ${fmtDate(today())}</span><span>BackOffice AI</span></div>
+  <table><tr>${REP.head.map(h=>'<th>'+esc(h)+'</th>').join('')}</tr>${REP.rows.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')}</table>
+  ${REP.note?'<p style="font-size:11px;color:#5B6B85">'+esc(REP.note)+'</p>':''}
+  <div class="ft">BackOffice AI © 2026. All Rights Reserved.</div></body></html>`);
+  w.document.close();w.print();
+}
+function repExport(){
+  const items=[['customers','Customers'],['payments','Payment Records'],['invoices','Invoice Records'],['expenses','Expense Records'],['income','Income Records'],['customer-history','Customer Balances']];
+  return `<div class="card" style="max-width:560px"><h3>Excel Export</h3><p class="hint" style="margin-bottom:12px">Download your data as CSV — opens directly in Excel or Google Sheets. Passwords are never included in any export.</p>
+  ${items.map(i=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><span>${i[1]}</span><button class="btn btn-outline btn-sm" onclick="exportCSV('${i[0]}')">⬇ Download</button></div>`).join('')}
+  </div>`;
+}
+function repImport(){
+  return `<div class="card" style="max-width:640px"><h3>Excel Import</h3>
+  <p class="hint" style="margin-bottom:12px">Upload a CSV file (exported from Excel / Google Sheets) with columns like: Name, Phone, Email, Service, Total, Paid. You'll preview and confirm before anything is saved. Duplicates by phone number are flagged.</p>
+  <input type="file" id="imp-file" accept=".csv,text/csv" onchange="previewImport(this)">
+  <div id="imp-preview" style="margin-top:14px"></div></div>`;
+}
+function previewImport(input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    const text=r.result;
+    const grid=parseCSV(text);
+    if(grid.length<2)return toast('The file appears to be empty or not valid CSV.','bad');
+    const head=grid[0].map(h=>h.trim().toLowerCase());
+    const find=k=>head.findIndex(h=>h.includes(k));
+    const iN=find('name'),iP=find('phone')>=0?find('phone'):find('mobile'),iS=find('service')>=0?find('service'):find('product'),iT=find('total')>=0?find('total'):find('amount'),iD=find('paid');
+    if(iN<0){$('imp-preview').innerHTML='<div class="err">Could not find a "Name" column. Include a Name column and try again.</div>';return}
+    const rows=grid.slice(1).filter(r2=>r2[iN]&&r2[iN].trim());
+    const existing=new Set(DB.customers.map(c=>c.phone));
+    const dups=rows.filter(r2=>existing.has((r2[iP]||'').trim())).length;
+    $('imp-preview').innerHTML=`<div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Service</th><th>Total</th><th>Paid</th><th>Check</th></tr></thead>
+    <tbody>${rows.slice(0,10).map(r2=>`<tr><td>${esc(r2[iN])}</td><td>${esc(r2[iP]||'')}</td><td>${esc(r2[iS]||'')}</td><td>${esc(r2[iT]||'0')}</td><td>${esc(r2[iD]||'0')}</td><td>${existing.has((r2[iP]||'').trim())?'<span class="pill overdue">Duplicate</span>':'<span class="pill paid">New</span>'}</td></tr>`).join('')}</tbody></table></div>
+    <p class="hint" style="margin:10px 0">${rows.length} row(s) found · ${dups} duplicate(s) by phone · first 10 previewed</p>
+    <button class="btn btn-primary btn-sm" onclick="doImport(${iN},${iP},${iS},${iT},${iD})">✔ Confirm Import of ${rows.length} Customers</button>`;
+    window.__impRows=rows;
+  };
+  r.readAsText(f);
+}
+function doImport(iN,iP,iS,iT,iD){
+  const rows=window.__impRows||[];let added=0;
+  rows.forEach(r2=>{
+    const phone=(r2[iP]||'').trim();
+    if(phone&&DB.customers.some(c=>c.phone===phone))return;
+    const total=Number(String(r2[iT]||'0').replace(/[^0-9.]/g,''))||0;
+    const paid=Number(String(r2[iD]||'0').replace(/[^0-9.]/g,''))||0;
+    const c={id:uid(),name:r2[iN].trim(),phone,email:'',address:'',type:'Individual',service:(r2[iS]||'').trim(),total,dueDate:'',notes:'Imported'};
+    DB.customers.push(c);
+    if(paid>0)DB.payments.push({id:uid(),customerId:c.id,invoiceId:'',amount:paid,date:today(),method:'Import',reference:'imported',notes:'Opening balance from import'});
+    added++;
+  });
+  saveDB();toast(added+' customer(s) imported successfully.','ok');go('customers','All Customers');
+}
+function parseCSV(text){
+  const rows=[];let row=[],cur='',q=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(q){if(ch==='"'){if(text[i+1]==='"'){cur+='"';i++}else q=false}else cur+=ch}
+    else if(ch==='"')q=true;
+    else if(ch===','){row.push(cur);cur=''}
+    else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cur);cur='';if(row.some(c=>c!==''))rows.push(row);row=[]}
+    else cur+=ch;
+  }
+  if(cur!==''||row.length){row.push(cur);if(row.some(c=>c!==''))rows.push(row)}
+  return rows;
+}
+function repDocs(){
+  const docs=DB.records.filter(r=>r.type==='doc');
+  const cats=[...new Set(DB.records.map(r=>r.category||'General'))];
+  return `<div class="card"><div class="card-head"><h3>Document Library</h3><div class="spacer"></div>
+    <button class="btn btn-primary btn-sm" onclick="$('dl-file').click()">📄 Upload Document</button><input type="file" id="dl-file" class="hidden" onchange="uploadDoc(this)"></div>
+  <div class="chips" style="margin:0 0 14px">${cats.map(c=>`<span class="pill partial">${esc(c)}</span>`).join('')}</div>
+  ${docs.length?docs.map(d=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><span>📎 <b>${esc(d.title)}</b> <small style="color:var(--muted)">· ${esc(d.category)} · ${fmtDate(d.date)}</small></span><button class="iconbtn danger" onclick="delRecord('${d.id}')">🗑</button></div>`).join(''):'<div class="empty" style="padding:26px"><div class="eico">📁</div><b>No documents yet</b><p>Upload reference documents to keep them organized by category.</p></div>'}</div>`;
+}
+function repCustom(){
+  return `<div class="card" style="max-width:640px"><h3>Custom Reports</h3>
+  <p class="hint" style="margin-bottom:10px">Choose the data set, then pick which columns to include. Generate, preview and download.</p>
+  <label>Data Set</label><select id="cr-set" onchange="renderCustomCols()">
+    <option value="customers">Customers</option><option value="payments">Payments</option><option value="expenses">Expenses</option><option value="income">Income</option></select>
+  <label>Columns</label><div id="cr-cols" class="chips" style="margin:0"></div>
+  <label>From Date</label><input id="cr-from" type="date" value="${addDays(today(),-365)}">
+  <label>To Date</label><input id="cr-to" type="date" value="${today()}">
+  <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-primary btn-sm" onclick="genCustom()">Generate Report</button>
+  <button class="btn btn-outline btn-sm" onclick="exportCSV('custom')">⬇ Download Excel (CSV)</button></div>
+  <div id="cr-out" style="margin-top:14px"></div></div>`;
+}
+const CR_FIELDS={customers:[['name','Name'],['phone','Phone'],['email','Email'],['service','Service'],['total','Total'],['balance','Balance'],['status','Status']],
+  payments:[['date','Date'],['customer','Customer'],['amount','Amount'],['method','Method'],['reference','Reference']],
+  expenses:[['date','Date'],['title','Title'],['category','Category'],['amount','Amount']],
+  income:[['date','Date'],['title','Title'],['customer','Customer'],['amount','Amount']]};
+function renderCustomCols(){
+  const set=$('cr-set').value;
+  $('cr-cols').innerHTML=CR_FIELDS[set].map((f,i)=>`<label style="display:inline-flex;align-items:center;gap:6px;text-transform:none;margin:0 10px 6px 0"><input type="checkbox" checked class="cr-chk" data-f="${i}" style="width:auto">${f[1]}</label>`).join('');
+}
+function genCustom(){
+  const set=$('cr-set').value,from=$('cr-from').value,to=$('cr-to').value;
+  const sel=[...document.querySelectorAll('.cr-chk')].filter(c=>c.checked).map(c=>Number(c.dataset.f)).filter(i=>!isNaN(i));
+  const fields=CR_FIELDS[set].filter((f,i)=>sel.includes(i));
+  if(!fields.length)return toast('Select at least one column.','bad');
+  let data=[];
+  if(set==='customers')data=DB.customers.map(c=>({name:c.name,phone:c.phone,email:c.email||'—',service:c.service||'—',total:money(c.total),balance:money(custBalance(c)),status:custStatus(c)}));
+  if(set==='payments')data=DB.payments.filter(p=>p.date>=from&&p.date<=to).map(p=>({date:fmtDate(p.date),customer:(custById(p.customerId)||{}).name||'—',amount:money(p.amount),method:p.method,reference:p.reference||'—'}));
+  if(set==='expenses')data=DB.expenses.filter(e=>e.date>=from&&e.date<=to).map(e=>({date:fmtDate(e.date),title:e.title,category:e.category,amount:money(e.amount)}));
+  if(set==='income')data=DB.income.filter(i=>i.date>=from&&i.date<=to).map(i=>({date:fmtDate(i.date),title:i.title,customer:i.customer||'—',amount:money(i.amount)}));
+  REP={title:'Custom '+set+' Report',head:fields.map(f=>f[1]),rows:data.map(d=>fields.map(f=>String(d[f[0]]))),note:'Records from '+fmtDate(from)+' to '+fmtDate(to)};
+  $('cr-out').innerHTML=`<div class="tbl-wrap"><table><thead><tr>${REP.head.map(h=>'<th>'+esc(h)+'</th>').join('')}</tr></thead><tbody>${REP.rows.length?REP.rows.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+REP.head.length+'">No records in this date range.</td></tr>'}</tbody></table></div>`;
+  window.__custom=REP;
+}
+function exportCSV(kind){
+  let name='backoffice-'+kind,grid=[];
+  if(kind==='customers')grid=[['Name','Phone','Email','Address','Type','Service','Total','Paid','Balance','Status','Due Date'],...DB.customers.map(c=>[c.name,c.phone,c.email||'',c.address||'',c.type||'',c.service||'',c.total,custTotalPaid(c.id),custBalance(c),statusOf(c.total,custTotalPaid(c.id),c.dueDate)[0],c.dueDate||''])];
+  else if(kind==='customer-history')grid=[['Customer','Total Paid','Outstanding','Status'],...DB.customers.map(c=>[c.name,custTotalPaid(c.id),custBalance(c),custStatus(c)])];
+  else if(kind==='payments')grid=[['Date','Customer','Amount','Method','Reference','Notes'],...DB.payments.map(p=>[p.date,(custById(p.customerId)||{}).name||'',p.amount,p.method,p.reference||'',p.notes||''])];
+  else if(kind==='invoices')grid=[['Invoice','Customer','Date','Due','Total','Status','Recurring'],...DB.invoices.map(i=>{const t=invTotal(i);return[i.number,(custById(i.customerId)||{}).name||'',i.date,i.due||'',t.toFixed(2),statusOf(t,invPaidDirect(i),i.due)[0],i.recurring||'']})];
+  else if(kind==='expenses')grid=[['Date','Title','Category','Vendor','Method','Amount','Notes'],...DB.expenses.map(e=>[e.date,e.title,e.category||'',e.vendor||'',e.method||'',e.amount,e.notes||''])];
+  else if(kind==='income')grid=[['Date','Title','Customer','Category','Method','Amount'],...DB.income.map(i=>[i.date,i.title,i.customer||'',i.category||'',i.method||'',i.amount])];
+  else if(kind==='report'&&REP)grid=[REP.head,...REP.rows];
+  else if(kind==='custom'&&window.__custom)grid=[window.__custom.head,...window.__custom.rows];
+  else return toast('Generate a report first.','bad');
+  if(grid.length<=1)return toast('No records to export yet.','bad');
+  const csv=grid.map(r=>r.map(c=>{c=String(c==null?'':c);return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c}).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:'text/csv'}));
+  a.download=name+'-'+today()+'.csv';a.click();
+  toast('Export downloaded. Opens directly in Excel.','ok');
+}
+function showImport(){go('reports','Excel Import')}
+
+/* =========== PAGE: SETTINGS =========== */
+function pSettings(sub){
+  const active=sub||SUBS['settings']||'Business Settings';
+  SUBS['settings']=active;
+  const tabs=['Business Settings','Profile Settings','Owner Admin Panel','User Management','Notifications','Security','Data Management','Help & Support'];
+  let body='';
+  if(active==='Business Settings')body=setBusiness();
+  else if(active==='Profile Settings')body=setProfile();
+  else if(active==='Owner Admin Panel')body=setAdmin();
+  else if(active==='User Management')body=setUsers();
+  else if(active==='Notifications')body=setNotif();
+  else if(active==='Security')body=setSecurity();
+  else if(active==='Data Management')body=setData();
+  else body=setHelp();
+  return `<div class="page-head"><h2>⚙️ Settings</h2></div>
+  <div class="sub-nav">${tabs.map(t=>`<button class="sub-link ${t===active?'active':''}" onclick="go('settings','${t}')">${t}</button>`).join('')}</div>${body}`;
+}
+function openSubSettings(label){go('settings',label)}
+function setBusiness(){
+  const b=DB.business;
+  return `<div class="card" style="max-width:680px"><h3>Business Settings</h3>
+  <form onsubmit="saveBizMain(event)">
+    <div class="f2"><div><label>Business Name</label><input id="bz-name" value="${esc(b.name)}" required></div>
+    <div><label>Category</label><select id="bz-cat">${Object.keys(CATEGORIES).map(k=>`<option ${k===b.category?'selected':''}>${k}</option>`).join('')}</select></div></div>
+    <label>Description</label><textarea id="bz-desc" rows="2">${esc(b.desc||'')}</textarea>
+    <label>Owner Name</label><input id="bz-owner" value="${esc(b.owner||'')}">
+    <label>Street / Area</label><input id="bz-street" value="${esc((b.address||{}).street||'')}">
+    <div class="f3"><div><label>City</label><input id="bz-city" value="${esc((b.address||{}).city||'')}"></div><div><label>PIN Code</label><input id="bz-pin" value="${esc((b.address||{}).pin||'')}"></div><div><label>State</label><input id="bz-state" value="${esc((b.address||{}).state||'')}"></div></div>
+    <label>Country</label><input id="bz-country" value="${esc((b.address||{}).country||'India')}">
+    <div class="f2"><div><label>Business Phone</label><input id="bz-phone" value="${esc(b.phone||'')}"></div><div><label>Business Email</label><input id="bz-email" value="${esc(b.email||'')}"></div></div>
+    <div class="f2"><div><label>Business Logo</label><input type="file" accept="image/*" onchange="changeImg('logo',this)"></div>
+    <div><label>Business Banner</label><input type="file" accept="image/*" onchange="changeImg('banner',this)"></div></div>
+    <button class="btn btn-primary" style="margin-top:14px">Save Changes</button>
+  </form></div>`;
+}
+function setProfile(){return bizOwner()}
+function setAdmin(){
+  const a=DB.admin;
+  return `<div class="grid g2" style="max-width:860px">
+  <div class="card"><h3>Admin Profile</h3>
+    <p style="font-size:14px;line-height:2"><b>Username:</b> @${esc(a.username)}<br><b>Registered Email:</b> ${esc(a.email)}<br><b>Business:</b> ${esc(DB.business.name)}<br><b>Role:</b> ${esc(a.role)}<br><b>Status:</b> <span class="pill paid">${esc(a.status||'Active')}</span><br><b>Created:</b> ${fmtDate(a.created)}<br><b>Last Login:</b> ${fmtDate(a.lastLogin||DB.profile.created)}</p>
+    <div class="alert blue" style="margin-top:8px"><span>🔒</span><span>Security status: strong. Passwords are hashed and never displayed. You are the Super Admin of this workspace.</span></div></div>
+  <div class="card"><h3>Admin Management</h3>
+    <form onsubmit="saveAdmin(event)">
+      <label>Admin Username</label><input id="ad-user" value="${esc(a.username)}">
+      <label>Admin Email</label><input id="ad-email" type="email" value="${esc(a.email)}">
+      <label>Recovery Mobile</label><input id="ad-rec" value="${esc(a.recovery||'')}">
+      <div class="f2"><div><label>New Password (optional)</label><input id="ad-pass" type="password" placeholder="Leave blank to keep"></div>
+      <div><label>Confirm Password</label><input id="ad-pass2" type="password"></div></div>
+      <button class="btn btn-primary btn-sm" style="margin-top:12px">Update Admin Panel</button>
+    </form>
+    <h3 style="margin-top:16px">Sessions</h3>
+    <div class="alert blue"><span>🖥</span><span>This device — active now (Super Admin)</span></div>
+    <button class="btn btn-outline btn-sm" onclick="toast('You are logged out from all other sessions.','ok')">Log out from other sessions</button></div></div>`;
+}
+function saveAdmin(e){
+  e.preventDefault();
+  const users=usersDB(),old=DB.admin.username,nu=$('ad-user').value.trim()||old;
+  if(users[old]){
+    if(nu!==old&&users[nu])return toast('That username is taken.','bad');
+    users[nu]={...users[old],username:nu,email:$('ad-email').value.trim()};
+    if(nu!==old){delete users[old];const biz=localStorage.getItem('backoffice_ai_biz_'+old);if(biz){localStorage.setItem('backoffice_ai_biz_'+nu,biz);localStorage.removeItem('backoffice_ai_biz_'+old)}}
+    const np=$('ad-pass').value;
+    if(np){if(np.length<6)return toast('Password must be at least 6 characters.','bad');if(np!==$('ad-pass2').value)return toast('Passwords do not match.','bad');users[nu].pass=hash(np)}
+    saveUsers(users);
+  }
+  DB.admin.username=nu;DB.admin.email=$('ad-email').value.trim();DB.admin.recovery=$('ad-rec').value.trim();
+  saveDB();renderChrome();go('settings','Owner Admin Panel');toast('Admin Panel updated.','ok');
+}
+let EXTRA_USERS=[];
+function setUsers(){
+  const roles=['Super Admin','Manager','Staff','Viewer'];
+  return `<div class="card" style="max-width:760px"><div class="card-head"><h3>User Management</h3><div class="spacer"></div>
+    <button class="btn btn-primary btn-sm" onclick="openNewUser()">+ Add User</button></div>
+  <p class="hint" style="margin-bottom:12px">Create additional authorized users for staff. Each user gets individual login credentials and role-based permissions. Super Admin keeps complete control.</p>
+  <div class="tbl-wrap"><table><thead><tr><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead>
+  <tbody><tr><td><b>@${esc(DB.admin.username)}</b></td><td>${esc(DB.admin.email)}</td><td>Super Admin</td><td><span class="pill paid">Active</span></td><td style="color:var(--muted);font-size:12px">You</td></tr>
+  ${EXTRA_USERS.map(u=>`<tr><td><b>@${esc(u.username)}</b></td><td>${esc(u.email)}</td><td>${esc(u.role)}</td><td><span class="pill ${u.active?'paid':'overdue'}">${u.active?'Active':'Deactivated'}</span></td>
+  <td class="tbl-actions"><button class="btn btn-sm btn-ghost" onclick="toggleUser('${u.username}')">${u.active?'Deactivate':'Reactivate'}</button><button class="iconbtn danger" onclick="delUser('${u.username}')">🗑</button></td></tr>`).join('')}
+  </tbody></table></div></div>`;
+}
+function openNewUser(){
+  openModal('Add Authorized User',`
+    <label>Username *</label><input id="nu-user" required>
+    <label>Email *</label><input id="nu-email" type="email" required>
+    <div class="f2"><div><label>Role</label><select id="nu-role">${['Manager','Staff','Viewer'].map(r=>`<option>${r}</option>`).join('')}</select></div>
+    <div><label>Temporary Password *</label><input id="nu-pass" type="password" required minlength="6"></div></div>
+    <p class="hint">Share the username and temporary password with your staff member securely — never by this email system. The Super Admin can deactivate or change the role anytime.</p>`,
+    `saveNewUser()`);
+}
+function saveNewUser(){
+  const u=$('nu-user').value.trim();if(!u)return toast('Enter a username.','bad');
+  if(EXTRA_USERS.some(x=>x.username===u))return toast('Username already exists.','bad');
+  EXTRA_USERS.push({username:u,email:$('nu-email').value.trim(),role:$('nu-role').value,active:true,pass:hash($('nu-pass').value)});
+  DB.activity.unshift({date:today(),text:'User @'+u+' ('+$('nu-role').value+') created by Super Admin'});
+  saveDB();closeModal();go('settings','User Management');toast('User @'+u+' created with role '+$('nu-role').value+'.','ok');
+}
+function toggleUser(u){const x=EXTRA_USERS.find(y=>y.username===u);x.active=!x.active;saveDB();go('settings','User Management')}
+function delUser(u){confirmDialog('Remove User','Remove @'+u+' from this workspace?',()=>{EXTRA_USERS=EXTRA_USERS.filter(x=>x.username!==u);saveDB();closeModal();go('settings','User Management');toast('User removed.','ok')})}
+function setNotif(){
+  return `<div class="card" style="max-width:560px"><h3>Notifications</h3>
+  ${[['Overdue customer payments','Get alerted when a payment passes its due date'],['Upcoming bills','Remind me 5 days before each bill is due'],['New invoice created'],['Weekly performance summary']].map(n=>`<label style="display:flex;align-items:center;gap:9px;text-transform:none;margin:12px 0;font-size:14px;font-weight:500;color:var(--text)"><input type="checkbox" checked style="width:auto"> ${n[0]}${n[1]?'<br><small style="color:var(--muted);font-weight:400;margin-left:24px">'+n[1]+'</small>':''}</label>`).join('')}
+  <p class="hint" style="margin-top:10px">Alerts appear on your dashboard in Reminders & Notifications and in Cash Alerts.</p></div>`;
+}
+function setSecurity(){
+  return `<div class="card" style="max-width:560px"><h3>Security</h3>
+  <div class="alert blue"><span>🔐</span><span>Passwords are hashed with a one-way algorithm and never stored or displayed in plain text. Passwords are never included in Excel exports.</span></div>
+  <div class="alert blue"><span>🛡</span><span>Your business data is private to your account. Each business owner can only access their own workspace.</span></div>
+  <div class="alert blue"><span>📱</span><span>Active sessions: 1 (this device). Use "Owner Admin Panel" to manage sessions and recovery details.</span></div>
+  <button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="go('business','Account & Password')">Change Password →</button>
+  <button class="btn btn-outline btn-sm" style="margin-top:8px;margin-left:8px" onclick="go('settings','Owner Admin Panel')">Admin Security →</button></div>`;
+}
+function setData(){
+  const t=finTotals();
+  const sizes=[['Customers',DB.customers.length],['Invoices',DB.invoices.length],['Payments',DB.payments.length],['Income records',DB.income.length],['Expenses',DB.expenses.length],['Bills',DB.bills.length],['Bank accounts',DB.banks.length],['Custom tables',DB.tables.length],['Documents & notes',DB.records.length]];
+  return `<div class="card" style="max-width:640px"><h3>Data Management</h3>
+  <p class="hint" style="margin-bottom:12px">Your workspace is saved privately on this device. ${sizes.map(s=>s[1]).reduce((a,b)=>a+b,0)} records stored · cash ${money(t.cash)}.</p>
+  ${sizes.map(s=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px"><span>${s[0]}</span><b>${s[1]}</b></div>`).join('')}
+  <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+    <button class="btn btn-primary btn-sm" onclick="exportCSV('customers');setTimeout(()=>exportCSV('payments'),400);setTimeout(()=>exportCSV('invoices'),800);setTimeout(()=>exportCSV('expenses'),1200)">⬇ Export All Data (Excel/CSV)</button>
+    <button class="btn btn-outline btn-sm" onclick="go('reports','Document Library')">📁 Manage Documents</button></div>
+  <div class="alert amber" style="margin-top:16px"><span>⚠️</span><span>Deleting your workspace removes all records from this device. Export first if unsure.</span>
+  <button class="btn btn-sm btn-danger" onclick="confirmDialog('Delete Workspace','Permanently delete ALL business records on this device? Export your data first — this cannot be undone.',()=>{localStorage.removeItem(DB_KEY);DB=null;EXTRA_USERS=[];closeModal();backToWelcome();toast('Workspace deleted.')})">Delete</button></div></div>`;
+}
+function setHelp(){
+  const faqs=[['How do I track who owes me money?','Open Customers or Payments & Banking → Customer Payments & Dues. Every customer shows Total, Paid and Remaining balance with a live status.'],
+    ['How do WhatsApp reminders work?','Click the 💬 button next to any customer with a pending balance. A respectful message is pre-filled with the amount and due date — edit it if you like, then WhatsApp opens with it ready to send.'],
+    ['How accurate is the cash-flow forecast?','It uses your real records: pending (not overdue) balances as expected income, and your scheduled bills plus recorded expenses as outflows. Overdue money is shown as at-risk, not guaranteed.'],
+    ['Can I import my existing customer list?','Yes — Reports & Excel → Excel Import. Upload a CSV from Excel with Name, Phone, Service, Total and Paid columns.'],
+    ['Is my data private?','Yes. Your workspace is stored only on your own device under your account, and passwords are never stored in plain text or in exports.'],
+    ['I forgot my password. What now?','Use "Forgot password?" on the login page, or update your password from Business Details → Account & Password.']];
+  return `<div class="grid g2" style="max-width:900px">
+  <div class="card"><h3>Frequently Asked Questions</h3>${faqs.map(f=>`<details style="padding:10px 0;border-bottom:1px solid var(--line)"><summary style="font-weight:600;font-size:14px;cursor:pointer">${f[0]}</summary><p style="font-size:13.5px;color:var(--muted);margin-top:8px">${f[1]}</p></details>`).join('')}</div>
+  <div class="card"><h3>Getting Started Guide</h3>
+    <div class="timeline"><div class="tl"><b>1. Add your customers</b><p style="font-size:13px;color:var(--muted)">Customers → Add Customer</p></div>
+    <div class="tl"><b>2. Create invoices</b><p style="font-size:13px;color:var(--muted)">Invoice Management → Create Invoice</p></div>
+    <div class="tl"><b>3. Record payments</b><p style="font-size:13px;color:var(--muted)">Payments & Banking → + Add Payment. Balances update everywhere automatically.</p></div>
+    <div class="tl"><b>4. Send reminders</b><p style="font-size:13px;color:var(--muted)">💬 button on any customer with dues.</p></div>
+    <div class="tl"><b>5. Watch your cash flow</b><p style="font-size:13px;color:var(--muted)">Cash Flow → 30/60/90-day forecast and What-If scenarios.</p></div>
+    <div class="tl"><b>6. Ask the AI assistant</b><p style="font-size:13px;color:var(--muted)">"What should I do today?"</p></div></div>
+    <h3 style="margin-top:16px">Support</h3><p style="font-size:13.5px;color:var(--muted)">Created by <b>Hemanth</b> — BackOffice AI, One Smart Platform to Manage Your Entire Business.<br>BackOffice AI © 2026. All Rights Reserved.</p></div></div>`;
+}
+
+/* =========== PAGE: ABOUT (inside app) =========== */
+function pAboutInApp(){
+  return `<div class="page-head"><h2>ℹ️ About BackOffice AI</h2></div>
+  <div class="card" style="max-width:760px">
+    <div style="display:flex;gap:16px;align-items:center;margin-bottom:14px">
+      <img src="/images/IMG_20261122_142327.png" style="width:64px;height:64px;border-radius:16px;object-fit:cover">
+      <div><b style="font-size:19px;color:var(--navy)">BackOffice AI</b><br><small style="color:var(--muted)">Your Business. Your Money. Your Control.</small></div></div>
+    <p style="font-size:14.5px">BackOffice AI is an AI-powered smart business management platform built for one-person businesses. It brings intelligent administration, customer &amp; employee management, task and payment tracking, business analytics, automated reports, a secure owner &amp; Super Admin panel, and AI-powered assistance into one platform — helping businesses save time, improve productivity, and manage the entire back office efficiently.</p>
+    <h3 style="margin-top:18px">About the Creator</h3>
+    <p style="font-size:14px;color:#334563"><b>Hemanth</b> — technology enthusiast with a strong interest in computers, Artificial Intelligence, software development, and innovation. Currently pursuing education while continuously improving technical, programming, and problem-solving skills. Enjoys web development, app development, AI tools, automation, business management, building creative projects, participating in hackathons, and converting innovative ideas into real-world solutions.</p>
+    <p style="font-size:14px;color:#334563;margin-top:10px">His vision: make BackOffice AI a professional, user-friendly, secure, and powerful platform for every one-person business.</p>
+    <p class="hint" style="margin-top:14px">BackOffice AI © 2026. All Rights Reserved.</p></div>`;
+}
+
+/* ---------- logout ---------- */
+function openLogoutModal(){
+  openModal('Log Out',`<p style="font-size:15px">Are you sure you want to log out of BackOffice AI?</p><p class="hint" style="margin-top:8px">Your business records stay safely saved and will be here when you log back in.</p>`,
+    `doLogout()`,null,'btn-danger','Yes, Logout');
+}
+function doLogout(){
+  localStorage.removeItem('backoffice_ai_last');
+  CHAT=[];DB=null;EXTRA_USERS=[];
+  closeModal();toggleSidebar(false);
+  showAuth('login');
+  toast('Logged out. Your business data is safe.','ok');
+}
+
+/* ---------- boot ---------- */
+(function boot(){
+  const users=usersDB();
+  if(Object.keys(users).length){
+    const last=localStorage.getItem('backoffice_ai_last');
+    if(last&&users[last]){$('log-user').value=last;$('log-remember').checked=true}
+    showAuth('login');
+  } else showAuth('welcome');
+})();
+</script>
+</body>
+</html>
